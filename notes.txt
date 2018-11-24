@@ -1,0 +1,1 @@
+Animation files must have: Version Number, Animation ID (Unique), Animation
