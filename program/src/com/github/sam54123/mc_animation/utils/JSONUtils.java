@@ -44,8 +44,8 @@ public class JSONUtils
 		}
 		
 		String string = getJSONStringFromFile(path);
-		return new JSONObject(getJSONStringFromFile(string));
-	
+		return new JSONObject(string);
+
 	}
 	
 	

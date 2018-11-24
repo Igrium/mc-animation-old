@@ -13,7 +13,6 @@ public class Animation
 	
 	private AnimFrame[] frames;
 	
-	private ArrayList<AnimCommand> commands;
 	
 	// Import an mcanim (json) file
 	public Animation(String path)
@@ -28,9 +27,9 @@ public class Animation
 		{
 			System.out.println("invalid file");
 			return;
-		}
+		}**/
 		
-		interpretJSON(jsonObject); **/
+		interpretJSON(jsonObject); 
 		
 	}
 	
@@ -65,12 +64,7 @@ public class Animation
 						JSONArrayToFloat(object.getJSONArray("head")));
 				
 				// Output command (if exists) to commands arraylist
-				/** String command = getCommand(object);
 				
-				if (command != null && command.length() > 0)
-				{
-					commands.add(new AnimCommand(command, i));
-				} **/
 			}
 		}
 	}
