@@ -1,0 +1,23 @@
+{
+  "version": "0.1",
+  "frames": [
+    {
+      "body": [1,2,3],
+      "left_arm": [1,2,3],
+      "right_arm": [1,2,3],
+      "left_leg": [1,2,3],
+      "right_leg": [1,2,3],
+      "head": [1,2,3]
+      "command": ""
+    },
+    {
+      "body": [1,2,3],
+      "left_arm": [1,5,3],
+      "right_arm": [1,2,3],
+      "left_leg": [1,2,3],
+      "right_leg": [1,2,3],
+      "head": [1,2,3]
+      "command: ""
+    }
+  ]
+}
