@@ -1,0 +1,12 @@
+{
+  "version": 0.1,
+  "type":"armor_stand",
+  "frames": [
+    {
+      "coord": [1, 2, 3], "command":"command"
+    },
+    {
+      "coord": [4, 5, 6], "command": "command"
+    }
+  ]
+}
