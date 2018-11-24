@@ -21,4 +21,9 @@ public class AnimCommand
 	{
 		return frame;
 	}
+	
+	public String toString()
+	{
+		return command;
+	}
 }

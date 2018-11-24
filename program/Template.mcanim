@@ -1,21 +1,22 @@
 {
   "version": "0.1",
+  "id": 100,
   "frames": [
     {
-      "body": [1,2,3],
-      "left_arm": [1,2,3],
+      "body": [0,0,0],
+      "left_arm": [63,12,100],
       "right_arm": [1,2,3],
-      "left_leg": [1,2,3],
-      "right_leg": [1,2,3],
+      "left_leg": [50,2,3],
+      "right_leg": [1,2,5],
       "head": [1,2,3],
-      "command": ""
+      "command": "say test"
     },
     {
       "body": [1,2,3],
       "left_arm": [1,5,3],
       "right_arm": [1,2,3],
       "left_leg": [1,2,3],
-      "right_leg": [1,2,3],
+      "right_leg": [24,70,3],
       "head": [1,2,3],
       "command": ""
     }

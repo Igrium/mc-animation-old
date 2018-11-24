@@ -10,8 +10,9 @@ public class Animation
 {
 	
 	public JSONObject jsonObject;
-	
+	private int id;
 	private AnimFrame[] frames;
+	private ArrayList<AnimCommand> commands;
 	
 	
 	// Import an mcanim (json) file
@@ -19,18 +20,58 @@ public class Animation
 	{
 		jsonObject = JSONUtils.getJSONObjectFromFile(path);
 		
-		/** try
-		{
-			jsonObject = JSONUtils.getJSONObjectFromFile(path);
-		}
-		catch(Exception e)
-		{
-			System.out.println("invalid file");
-			return;
-		}**/
+		commands = new ArrayList<AnimCommand>();
 		
 		interpretJSON(jsonObject); 
 		
+	}
+	
+	public AnimFrame[] getFramesAsArray() 
+	{
+		return frames;
+	}
+	
+	public AnimCommand[] getCommandsAsArray()
+	{
+		AnimCommand[] array = new AnimCommand[commands.size()];
+		for (int i = 0; i < commands.size(); i++)
+		{
+			array[i] = commands.get(i);
+		}
+		
+		return array;
+	}
+	
+	public int length()
+	{
+		return frames.length;
+	}
+	
+	public AnimFrame getFrame(int index)
+	{
+		return frames[index];
+	}
+	
+	public int id()
+	{
+		return id;
+	}
+	
+	public void setId(int id)
+	{
+		if (id > 0)
+		{
+			this.id = id;
+		}
+		else
+		{
+			System.out.println("Can't set ID to less than 1");
+		}
+	}
+	
+	public String getCompiledAnimName()
+	{
+		return "anim-"+id;
 	}
 	
 	// interpret the JSONObject and setup all this Animation Object's variables, will crash if invalid JSON.
@@ -39,13 +80,15 @@ public class Animation
 		String version = jsonObject.getString("version");
 		
 		// output frames to frames array
-		if (true)
+		if (version.matches("0.1"))
 		{
+			System.out.println("Interpreting mcanim version 0.1");
+			
 			JSONArray jsonArray = jsonObject.getJSONArray("frames");
-			
 			JSONObject object;
+			String command;
 			
-			System.out.println("version1");
+			id = jsonObject.getInt("id");
 			
 			// create new AnimFrame array of the right length
 			frames = new AnimFrame[jsonArray.length()];
@@ -65,9 +108,21 @@ public class Animation
 				
 				// Output command (if exists) to commands arraylist
 				
+				command = getCommand(object);
+				
+				if (command != null && !command.matches(""))
+				{
+					commands.add(new AnimCommand(command, i));
+				}
 			}
+			
+		}
+		else
+		{
+			System.out.println("Unknown file version: " + version);
 		}
 	}
+
 	
 	// Convert a JSONArray to a float array
 	private float[] JSONArrayToFloat(JSONArray array)
@@ -96,4 +151,5 @@ public class Animation
 			return null;
 		}
 	}
+
 }
