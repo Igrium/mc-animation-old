@@ -8,7 +8,7 @@ public class FileHandle
 	{
 		try
 		{
-			InputStream inputStream = FileHandle.class.getResourceAsStream(path);
+			InputStream inputStream = FileHandle.class.getResourceAsStream(path);;
 			return inputStream;
 		}
 		catch(Exception e)

@@ -1,7 +1,6 @@
 package com.github.sam54123.mc_animation.utils;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.Scanner;
 
 import org.json.JSONObject;
@@ -10,12 +9,14 @@ public class JSONUtils
 {
 	public static String getJSONStringFromFile(String path)
 	{
+		System.out.println(path);
 		// Open file
 		Scanner scanner;
 		try 
 		{
-			InputStream in = FileHandle.inputStreamFromFile(path);
-			scanner = new Scanner(in);
+			
+			File file = new File(path);
+			scanner = new Scanner(file);
 			// Get JSON as string without spaces or newlines
 			String json = scanner.useDelimiter("\\Z").next();
 			
@@ -42,6 +43,7 @@ public class JSONUtils
 			System.out.println("Invalid Path");
 			return null;
 		}
+		
 		
 		String string = getJSONStringFromFile(path);
 		return new JSONObject(string);
