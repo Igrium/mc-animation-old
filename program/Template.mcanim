@@ -10,6 +10,7 @@
       "left_leg": [50,2,3],
       "right_leg": [1,2,5],
       "head": [1,2,3],
+	  "rotation": 45,
       "command": "say test"
     },
     {
@@ -18,6 +19,7 @@
       "right_arm": [1,2,3],
       "left_leg": [1,2,3],
       "right_leg": [24,70,32],
+	  "rotation": 45,
       "head": [1,2,3]
     },
     {
@@ -27,7 +29,7 @@
       "left_leg": [1,2,3],
       "right_leg": [24,70,3],
       "head": [1,2,3],
-      "command": "frame 2"
+	  "rotation": 45,
     }
   ]
 }

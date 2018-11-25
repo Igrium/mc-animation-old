@@ -66,6 +66,13 @@ public class MCAnimValidator
 					return false;
 				}
 				
+				try
+				{
+					frame.getFloat("rotation");
+				} catch (JSONException e) {
+					return false;
+				}
+				
 			}
 		}
 		return true;

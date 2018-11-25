@@ -14,7 +14,7 @@ public class AnimCompiler
 	// Formats a single frame of an animation
 	public static String formatFrame(AnimFrame frame, String selector)
 	{
-		return "data merge entity " + selector + " {" + formatPose(frame) + "}";
+		return "data merge entity " + selector + " {" + formatPose(frame) + ",Rotation:["+ formatFloat(frame.rotation)+ ",0.0f]}";
 	}
 	
 	public static String formatAnimCall(Animation anim)

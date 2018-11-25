@@ -159,7 +159,8 @@ public class Animation
 						JSONArrayToFloat(object.getJSONArray("right_arm")),
 						JSONArrayToFloat(object.getJSONArray("left_leg")),
 						JSONArrayToFloat(object.getJSONArray("right_leg")),
-						JSONArrayToFloat(object.getJSONArray("head")));
+						JSONArrayToFloat(object.getJSONArray("head")),
+						object.getFloat("rotation"));
 				
 				// Output command (if exists) to commands arraylist
 				
