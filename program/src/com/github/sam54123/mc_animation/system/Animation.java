@@ -10,6 +10,7 @@ public class Animation
 {
 	
 	public JSONObject jsonObject;
+	public String name;
 	private int id;
 	private AnimFrame[] frames;
 	private ArrayList<AnimCommand> commands;
@@ -24,6 +25,8 @@ public class Animation
 		
 		interpretJSON(jsonObject); 
 		
+		// set name
+		name = path.substring((path.lastIndexOf("\\")+1), path.lastIndexOf("."));
 	}
 	
 	public AnimFrame[] getFramesAsArray() 

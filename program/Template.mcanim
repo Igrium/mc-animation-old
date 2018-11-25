@@ -1,6 +1,6 @@
 {
   "version": "0.1",
-  "id": 100,
+  "id": 23,
   "frames": [
     {
       "body": [0,0,0],
@@ -17,8 +17,16 @@
       "right_arm": [1,2,3],
       "left_leg": [1,2,3],
       "right_leg": [24,70,3],
+      "head": [1,2,3]
+    },
+    {
+      "body": [1,2,3],
+      "left_arm": [1,5,3],
+      "right_arm": [1,2,3],
+      "left_leg": [1,2,3],
+      "right_leg": [24,70,3],
       "head": [1,2,3],
-      "command": ""
+      "command": "frame 2"
     }
   ]
 }

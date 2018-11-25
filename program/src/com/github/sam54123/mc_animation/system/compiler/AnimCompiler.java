@@ -3,12 +3,89 @@ package com.github.sam54123.mc_animation.system.compiler;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import com.github.sam54123.mc_animation.utils.MCCommandConstants;
 
+import com.github.sam54123.mc_animation.system.AnimCommand;
 import com.github.sam54123.mc_animation.system.AnimFrame;
 import com.github.sam54123.mc_animation.system.Animation;
 
 public class AnimCompiler 
 {
+	// Formats a single frame of an animation
+	public static String formatFrame(AnimFrame frame, String selector)
+	{
+		return "data merge entity " + selector + " {" + formatPose(frame) + "}";
+	}
+	
+	public static String formatAnimCall(Animation anim)
+	{
+		return "execute as @e[scores={"+MCCommandConstants.ANIMATION+"="+anim.id()+"}] unless score @s "+MCCommandConstants.PAUSED+" matches 1.. run function "+MCCommandConstants.NAMESPACE+":animations/"+anim.getCompiledAnimName();
+	}
+	
+	// Compiles the animation into a .mcfunction file
+	public static void compileAnimation(Animation animation, String outputPath, boolean looping) throws IOException
+	{
+		//Create a writer
+		String filepath = outputPath + animation.getCompiledAnimName()+".mcfunction";
+		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
+			
+		// Get all the animation frames
+		AnimFrame[] frames = animation.getFramesAsArray();
+		
+		// Info at top of file
+		writer.write("# name: "+ animation.name);
+		writer.newLine();
+		writer.write("# id: "+ animation.id());
+		writer.newLine();
+		
+		// Close animation if not looping
+			if (!looping)
+			{
+				writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.ANIMATION +" 0");
+				writer.newLine();
+			}
+			writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.FRAME +" 0");
+			writer.newLine();
+		
+		// Output all frames to file
+		writer.write("# frames:");
+		writer.newLine();
+			
+		String generated;
+		for (int i = 0; i < frames.length; i++)
+		{
+			generated = formatFrame(frames[i], "@s[scores={"+ MCCommandConstants.FRAME + "="+i+"}]");
+			writer.write(generated);
+			writer.newLine();
+		}
+		// Get all commands
+		AnimCommand[] commands = animation.getCommandsAsArray();
+			
+		// Output commands to file
+		writer.write("# commands:");
+		writer.newLine();
+			
+		for (int i = 0; i < commands.length; i++)
+		{
+			writer.write(formatCommand(commands[i], commands[i].getFrame()));
+			writer.newLine();
+		}
+			
+		// Next frame
+		writer.write("# next frame code");
+		writer.newLine();
+		writer.write("scoreboard players add @s "+ MCCommandConstants.FRAME + " 1");
+		writer.newLine();
+			
+		
+		
+		
+		writer.close();
+		
+		System.out.println("Wrote to "+ filepath);
+		System.out.println("Add '"+ formatAnimCall(animation) +"' to any tick function to activate.");
+	}
+		
 	private static String formatPose(AnimFrame frame)
 	{
 		//Format the indivdual parts
@@ -24,27 +101,12 @@ public class AnimCompiler
 		return data;
 	}
 	
-	public static String formatFrame(AnimFrame frame, String selector)
-	{
-		return "data merge entity " + selector + " {" + formatPose(frame) + "}";
-	}
 	
-	// Compiles the animation into a .mcfunction file
-	public static void compileAnimation(Animation animation, String outputPath) throws IOException
+	
+	private static String formatCommand(AnimCommand command, int frame)
 	{
-		// Get all the animation frames
-		AnimFrame[] frames = animation.getFramesAsArray();
-		
-		String filepath = outputPath + animation.getCompiledAnimName()+".mcfunction";
-		
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
-		
-		String generated;
-		for (int i = 0; i < frames.length; i++)
-		{
-			generated = formatFrame(frames[i], "@s[scores={mc-anim.frame="+i+"}]");
-			writer.write(generated);
-		}
+		String output = "execute at @s if score @s " + MCCommandConstants.FRAME + " matches " + frame + " run " + command;
+		return output;
 	}
 	
 	// formats a float into the 3.0f format
@@ -53,4 +115,6 @@ public class AnimCompiler
 		String string = Float.toString(num);
 		return string+"f";
 	}
+	
+	
 }

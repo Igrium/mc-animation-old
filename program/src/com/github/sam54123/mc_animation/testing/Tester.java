@@ -28,7 +28,7 @@ public class Tester {
 		System.out.println(animation.id());
 		
 		try {
-			AnimCompiler.compileAnimation(animation, "C:\\Users\\Sam54123\\Documents\\MinecraftAnimationSystem\\program");
+			AnimCompiler.compileAnimation(animation, "C:\\Users\\Sam54123\\Documents\\MinecraftAnimationSystem\\program\\", true);
 		} catch (IOException e) {
 			System.out.println("failed");
 			e.printStackTrace();
