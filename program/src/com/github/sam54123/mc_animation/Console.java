@@ -47,7 +47,7 @@ public class Console {
 		// get input from user if not fed
 		if (input == null || input.isEmpty())
 		{
-			System.out.print("path to .mcanim: ");
+			System.out.print("Path to .mcanim: ");
 			input = reader.nextLine();
 		}
 		
@@ -61,7 +61,7 @@ public class Console {
 		
 		if (output == null || output.isEmpty())
 		{
-			System.out.print("path to output: ");
+			System.out.print("Path to output: ");
 			output = reader.nextLine();
 		}
 		
