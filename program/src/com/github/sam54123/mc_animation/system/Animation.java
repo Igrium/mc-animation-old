@@ -1,25 +1,67 @@
 package com.github.sam54123.mc_animation.system;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.json.*;
 
 import com.github.sam54123.mc_animation.utils.JSONUtils;
+import com.github.sam54123.mc_animation.utils.MCAnimValidator;
 
 public class Animation 
 {
 	
 	public JSONObject jsonObject;
 	public String name;
+	public boolean looping;
 	private int id;
 	private AnimFrame[] frames;
 	private ArrayList<AnimCommand> commands;
 	
 	
+	private boolean isInitialized = false;
+	
+	
 	// Import an mcanim (json) file
 	public Animation(String path)
 	{
-		jsonObject = JSONUtils.getJSONObjectFromFile(path);
+		
+		
+		System.out.println("Opening "+path);
+		
+		// Validate path
+		
+		File file = new File(path);
+		
+		if (!file.exists())
+		{
+			System.out.println("Unknown File");
+			return;
+		}
+		
+		String extention = path.substring(path.lastIndexOf("."));
+		if (!extention.matches(".mcanim"))
+		{
+			System.out.println("Unknown filetype: " + extention);
+			return;
+		}
+		
+		// Create animation
+		try
+		{
+			jsonObject = JSONUtils.getJSONObjectFromFile(path);
+		}
+		catch(JSONException e)
+		{
+			System.out.println("Incorrectly Formatted .mcanim");
+			return;
+		}
+		
+		if (!MCAnimValidator.validate(jsonObject))
+		{
+			System.out.println("Incorrectly Formatted .mcanim");
+			return;
+		}
 		
 		commands = new ArrayList<AnimCommand>();
 		
@@ -27,6 +69,8 @@ public class Animation
 		
 		// set name
 		name = path.substring((path.lastIndexOf("\\")+1), path.lastIndexOf("."));
+		
+		isInitialized = true;
 	}
 	
 	public AnimFrame[] getFramesAsArray() 
@@ -77,6 +121,10 @@ public class Animation
 		return "anim-"+id;
 	}
 	
+	public boolean isInitialized()
+	{
+		return isInitialized;
+	}
 	// interpret the JSONObject and setup all this Animation Object's variables, will crash if invalid JSON.
 	private void interpretJSON(JSONObject jsonObject)
 	{
@@ -91,7 +139,11 @@ public class Animation
 			JSONObject object;
 			String command;
 			
+			// get ID
 			id = jsonObject.getInt("id");
+			
+			// get is Looping
+			looping = jsonObject.getBoolean("looping");
 			
 			// create new AnimFrame array of the right length
 			frames = new AnimFrame[jsonArray.length()];

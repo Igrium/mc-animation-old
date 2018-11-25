@@ -1,6 +1,7 @@
 {
   "version": "0.1",
   "id": 23,
+  "looping": true,
   "frames": [
     {
       "body": [0,0,0],
@@ -16,7 +17,7 @@
       "left_arm": [1,5,3],
       "right_arm": [1,2,3],
       "left_leg": [1,2,3],
-      "right_leg": [24,70,3],
+      "right_leg": [24,70,32],
       "head": [1,2,3]
     },
     {

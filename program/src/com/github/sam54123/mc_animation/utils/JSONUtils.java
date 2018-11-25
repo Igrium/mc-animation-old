@@ -9,7 +9,6 @@ public class JSONUtils
 {
 	public static String getJSONStringFromFile(String path)
 	{
-		System.out.println(path);
 		// Open file
 		Scanner scanner;
 		try 

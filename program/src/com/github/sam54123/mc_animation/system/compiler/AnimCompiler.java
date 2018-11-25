@@ -23,8 +23,17 @@ public class AnimCompiler
 	}
 	
 	// Compiles the animation into a .mcfunction file
-	public static void compileAnimation(Animation animation, String outputPath, boolean looping) throws IOException
+	public static void compileAnimation(Animation animation, String outputPath) throws IOException
 	{
+		// Make sure path is formatted properly
+		
+		outputPath = outputPath.replace("\\", "/");
+			
+		if (!outputPath.substring(outputPath.length() - 1).matches("/")) 
+		{
+			outputPath = outputPath+"/";
+		}
+		
 		//Create a writer
 		String filepath = outputPath + animation.getCompiledAnimName()+".mcfunction";
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
@@ -37,9 +46,11 @@ public class AnimCompiler
 		writer.newLine();
 		writer.write("# id: "+ animation.id());
 		writer.newLine();
+		writer.write("# looping: "+ animation.looping);
+		writer.newLine();
 		
 		// Close animation if not looping
-			if (!looping)
+			if (!animation.looping)
 			{
 				writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.ANIMATION +" 0");
 				writer.newLine();
@@ -83,7 +94,7 @@ public class AnimCompiler
 		writer.close();
 		
 		System.out.println("Wrote to "+ filepath);
-		System.out.println("Add '"+ formatAnimCall(animation) +"' to any tick function to activate.");
+	
 	}
 		
 	private static String formatPose(AnimFrame frame)
