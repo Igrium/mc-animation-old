@@ -1,2 +1,8 @@
 Animation files must have: Version Number, Animation ID (Unique), Animation
 Command demo: /data merge entity @e[name=test,limit=1] {Pose:{RightArm:[0f,0f,0f],RightLeg:[55f,0f,0f],LeftArm:[40f,80f,0f],LeftLeg:[-70f,0f,0f]},Tags:["AM_1rlYvj"],NoGravity:1}
+
+rotations:
+left arm: switch x/z, MCz*-1
+right arm: (same as left)
+body: (same as arms)
+head: x*-1, y*-1
