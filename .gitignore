@@ -3,6 +3,7 @@ game/*
 
 // blender stuff
 *.blend
+*.blend1
 *.png
 *.jpg
 *.jpeg
