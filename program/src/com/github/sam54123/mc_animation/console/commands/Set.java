@@ -56,7 +56,7 @@ public class Set extends CommandBase {
 
 	@Override
 	public String getDescription() {
-		return "Sets a paramater in the currently loaded";
+		return "Sets a paramater in the currently loaded animation";
 	}
 
 }

@@ -27,8 +27,7 @@ public class Console {
 	public void activate(String[] args)
 	{
 		System.out.println("Minecraft Animation System "+ ProgramConstants.VERSION);
-		System.out.println("Note: Only converts .mcanim to .mcfunction for now");
-		System.out.println("");
+		System.out.println("Type 'help' for a list of commands.");
 		
 		reader = new Scanner(System.in);
 		
