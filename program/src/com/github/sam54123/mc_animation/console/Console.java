@@ -52,6 +52,7 @@ public class Console {
 		new Get().register();
 		new Export().register();
 		new Save().register();
+		new Set().register();
 	}
 	
 	private void loop()

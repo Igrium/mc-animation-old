@@ -89,7 +89,6 @@ public class Animation
 		
 		String jsonString = jsonObject.toString();
 		
-		System.out.println(jsonString);
 		
 		FileWriter file = new FileWriter(path);
 		file.write(jsonObject.toString());
