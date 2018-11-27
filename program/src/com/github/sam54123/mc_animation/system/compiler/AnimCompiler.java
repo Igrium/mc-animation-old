@@ -50,18 +50,19 @@ public class AnimCompiler
 		writer.newLine();
 		
 		// Close animation if not looping
-			if (!animation.looping)
-			{
-				writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.ANIMATION +" 0");
-				writer.newLine();
-			}
-			writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.FRAME +" 0");
+		if (!animation.looping)
+		{
+			writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.ANIMATION +" 0");
 			writer.newLine();
+		}
 		
 		// Output all frames to file
 		writer.write("# frames:");
 		writer.newLine();
-			
+					
+		writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.FRAME +" 0");
+		writer.newLine();
+		
 		String generated;
 		for (int i = 0; i < frames.length; i++)
 		{
@@ -83,8 +84,6 @@ public class AnimCompiler
 		}
 			
 		// Next frame
-		writer.write("# next frame code");
-		writer.newLine();
 		writer.write("scoreboard players add @s "+ MCCommandConstants.FRAME + " 1");
 		writer.newLine();
 			

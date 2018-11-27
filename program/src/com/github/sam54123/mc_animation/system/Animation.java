@@ -1,6 +1,8 @@
 package com.github.sam54123.mc_animation.system;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.*;
@@ -14,9 +16,11 @@ public class Animation
 	public JSONObject jsonObject;
 	public String name;
 	public boolean looping;
+	public String path;
+	private ArrayList<AnimCommand> commands;
 	private int id;
 	private AnimFrame[] frames;
-	private ArrayList<AnimCommand> commands;
+	
 	
 	
 	private boolean isInitialized = false;
@@ -39,12 +43,15 @@ public class Animation
 			return;
 		}
 		
+		
 		String extention = path.substring(path.lastIndexOf("."));
 		if (!extention.matches(".mcanim"))
 		{
 			System.out.println("Unknown filetype: " + extention);
 			return;
 		}
+		
+		this.path = file.getAbsolutePath();
 		
 		// Create animation
 		try
@@ -71,6 +78,32 @@ public class Animation
 		name = path.substring((path.lastIndexOf("\\")+1), path.lastIndexOf("."));
 		
 		isInitialized = true;
+	}
+	
+	// Saves the animation as a .mcanim file and updates path accordingly
+	public File save(String path) throws IOException
+	{
+		outputToJSON(jsonObject);
+		
+		// write the json to file
+		
+		String jsonString = jsonObject.toString();
+		
+		System.out.println(jsonString);
+		
+		FileWriter file = new FileWriter(path);
+		file.write(jsonObject.toString());
+		file.close();
+			
+		this.path = path;
+		System.out.println("Sucessfully wrote to "+ path);
+		return new File(path);
+		
+	}
+	
+	public File save() throws IOException
+	{
+		return save(path);
 	}
 	
 	public AnimFrame[] getFramesAsArray() 
@@ -116,6 +149,19 @@ public class Animation
 		}
 	}
 	
+// finds the command of the given frame
+	public AnimCommand findCommand(int frame) 
+	{
+		for (AnimCommand command : getCommandsAsArray())
+		{
+			if (command.getFrame() == frame)
+			{
+				return command;
+			}
+		}
+		
+		return null;
+	}
 	public String getCompiledAnimName()
 	{
 		return "anim-"+id;
@@ -178,7 +224,53 @@ public class Animation
 			System.out.println("Unknown file version: " + version);
 		}
 	}
-
+	
+	public void outputToJSON(JSONObject jsonObject)
+	{
+		// Set basic metadata
+		jsonObject.put("version", "0.1");
+		jsonObject.put("id", id);
+		jsonObject.put("looping", looping);
+		
+		// add frames and commands
+		JSONArray jsonFrames = new JSONArray();
+		
+		for (int i = 0; i < frames.length; i++)
+		{
+			
+			AnimFrame frame = frames[i];
+			
+			JSONObject jsonFrame = new JSONObject();
+			
+			// Make JSONArrays of all the the body parts
+			JSONArray body = new JSONArray(frame.body);
+			JSONArray left_arm = new JSONArray(frame.leftArm);
+			JSONArray right_arm = new JSONArray(frame.rightArm);
+			JSONArray left_leg = new JSONArray(frame.leftLeg);
+			JSONArray right_leg = new JSONArray(frame.rightLeg);
+			JSONArray head = new JSONArray(frame.head);
+			
+			// Add all JSONArrays to frame
+			jsonFrame.put("body", body);
+			jsonFrame.put("left_arm", left_arm);
+			jsonFrame.put("right_arm", right_arm);
+			jsonFrame.put("left_leg", left_leg);
+			jsonFrame.put("right_leg", right_leg);
+			jsonFrame.put("head", head);
+			jsonFrame.put("rotation", frame.rotation);
+			
+			AnimCommand command = findCommand(i);
+			
+			if (command != null)
+			{
+				jsonFrame.put("command", command.getCommand());
+			}
+			
+			jsonFrames.put(jsonFrame);
+		}
+		
+		jsonObject.put("frames", jsonFrames);
+	}
 	
 	// Convert a JSONArray to a float array
 	private float[] JSONArrayToFloat(JSONArray array)
