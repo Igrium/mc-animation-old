@@ -99,8 +99,10 @@ def write_frame(context, object, frame):
     left_leg = convert_array(get_rotation(bones['left_leg']), False)
     right_leg = convert_array(get_rotation(bones['right_leg']), False)
     head = convert_array(get_rotation(bones['head']), True)
-    rotation = round(math.degrees(get_rotation(bones['right_arm'])[1]), 2) 
+    rotation = round(math.degrees(get_rotation(bones['root'])[1]), 2) 
     
+    print(rotation)
+	
     # output found values to dictionary
     output = {
         "body": body,
@@ -138,7 +140,7 @@ def convert_array(array, isHead):
 
 # Only needed if you want to add into a dynamic menu
 def menu_func_export(self, context):
-    self.layout.operator(ExportMCAnim.bl_idname, text="MCAnim")
+    self.layout.operator(ExportMCAnim.bl_idname, text="Minecraft Animation (.mcanim)")
 
 
 def register():
