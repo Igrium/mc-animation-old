@@ -9,6 +9,7 @@ import org.json.*;
 
 import com.github.sam54123.mc_animation.utils.JSONUtils;
 import com.github.sam54123.mc_animation.utils.MCAnimValidator;
+import com.github.sam54123.mc_animation.utils.ProgramConstants;
 
 public class Animation 
 {
@@ -176,7 +177,7 @@ public class Animation
 		String version = jsonObject.getString("version");
 		
 		// output frames to frames array
-		if (version.matches("0.1"))
+		if (version.matches(ProgramConstants.ANIMVERSION))
 		{
 			System.out.println("Interpreting mcanim version 0.1");
 			
@@ -227,7 +228,7 @@ public class Animation
 	public void outputToJSON(JSONObject jsonObject)
 	{
 		// Set basic metadata
-		jsonObject.put("version", "0.1");
+		jsonObject.put("version", ProgramConstants.ANIMVERSION);
 		jsonObject.put("id", id);
 		jsonObject.put("looping", looping);
 		
