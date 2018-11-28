@@ -3,7 +3,6 @@ package com.github.sam54123.mc_animation.console.commands;
 
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
-import com.github.sam54123.mc_animation.system.AnimCommand;
 import com.github.sam54123.mc_animation.utils.MCAnimStatics;
 
 public class Set extends CommandBase {
