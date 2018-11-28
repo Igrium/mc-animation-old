@@ -8,7 +8,24 @@ public abstract class CommandBase
 	{
 		if (args.length >= requiredArgs)
 		{
-			return this.onRun(console, args);
+			if (this.requiresAnim)
+			{
+				if (console.loadedAnim == null)
+				{
+					System.out.println("No animation loaded!");
+					return false;
+				}
+				else
+				{
+					return this.onRun(console, args);
+				}
+				
+			}
+			else
+			{
+				return this.onRun(console, args);
+			}
+			
 		}
 		else
 		{
@@ -18,6 +35,8 @@ public abstract class CommandBase
 	}
 	
 	protected int requiredArgs = 0;
+	
+	protected boolean requiresAnim = false;
 	
 	public abstract String getName();
 	

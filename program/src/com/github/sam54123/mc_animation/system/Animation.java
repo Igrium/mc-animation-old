@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.json.*;
 
 import com.github.sam54123.mc_animation.utils.JSONUtils;
+import com.github.sam54123.mc_animation.utils.MCAnimStatics;
 import com.github.sam54123.mc_animation.utils.MCAnimValidator;
 import com.github.sam54123.mc_animation.utils.ProgramConstants;
 
@@ -44,13 +45,22 @@ public class Animation
 			return;
 		}
 		
-		
-		String extention = path.substring(path.lastIndexOf("."));
-		if (!extention.matches(".mcanim"))
+		try
 		{
-			System.out.println("Unknown filetype: " + extention);
+			String extention = path.substring(path.lastIndexOf("."));
+			if (!extention.matches(".mcanim"))
+			{
+				System.out.println("Unknown filetype: " + extention);
+				return;
+			}
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			System.out.println("Unknown filetype");
 			return;
 		}
+			
+		
 		
 		this.path = file.getAbsolutePath();
 		
@@ -106,6 +116,17 @@ public class Animation
 		return save(path);
 	}
 	
+	// Returns the folder this animatin is in, excluding the file itself
+	public String getFolder()
+	{
+		String path = MCAnimStatics.formatPath(this.path);
+		
+		// get the last index of '/'
+		int index = path.substring(0, path.length() - 1).lastIndexOf('/');
+		
+		return path.substring(0, index);
+	}
+	
 	public AnimFrame[] getFramesAsArray() 
 	{
 		return frames;
@@ -149,8 +170,8 @@ public class Animation
 		}
 	}
 	
-// finds the command of the given frame
-	public AnimCommand findCommand(int frame) 
+	// finds the command of the given frame
+	public AnimCommand getCommandByFrame(int frame) 
 	{
 		for (AnimCommand command : getCommandsAsArray())
 		{
@@ -162,6 +183,21 @@ public class Animation
 		
 		return null;
 	}
+	
+	public void setCommand(int frame, String command)
+	{
+		// remove current command in frame
+		for (int i = 0; i < commands.size(); i++)
+		{
+			if (commands.get(i).getFrame() == frame)
+			{
+				commands.remove(i);
+			}
+		}
+		
+		commands.add(new AnimCommand(command, frame));
+	}
+	
 	public String getCompiledAnimName()
 	{
 		return "anim-"+id;
@@ -259,7 +295,7 @@ public class Animation
 			jsonFrame.put("head", head);
 			jsonFrame.put("rotation", frame.rotation);
 			
-			AnimCommand command = findCommand(i);
+			AnimCommand command = getCommandByFrame(i);
 			
 			if (command != null)
 			{

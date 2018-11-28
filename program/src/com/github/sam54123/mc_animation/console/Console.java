@@ -1,5 +1,6 @@
 package com.github.sam54123.mc_animation.console;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -19,6 +20,7 @@ public class Console {
 		console.activate(args);
 	}
 	
+	public InputStream source = System.in;
 	private Scanner reader;
 	public Animation loadedAnim;
 	
@@ -29,7 +31,7 @@ public class Console {
 		System.out.println("Minecraft Animation System "+ ProgramConstants.VERSION);
 		System.out.println("Type 'help' for a list of commands.");
 		
-		reader = new Scanner(System.in);
+		reader = new Scanner(source);
 		
 		
 		// run on the the given file if present
@@ -52,6 +54,7 @@ public class Console {
 		new Export().register();
 		new Save().register();
 		new Set().register();
+		new MCCommand().register();
 	}
 	
 	private void loop()
@@ -59,6 +62,12 @@ public class Console {
 		String input = reader.nextLine();
 		
 		Command command = new Command(input);
+		
+		// make sure the user actually typed something
+		if(command.name().matches(""))
+		{
+			return;
+		}
 		
 		if (commands.containsKey(command.name()))
 		{
@@ -70,6 +79,11 @@ public class Console {
 		}
 		
 		command = null;
+	}
+	
+	public Scanner reader()
+	{
+		return reader;
 	}
 	
 	

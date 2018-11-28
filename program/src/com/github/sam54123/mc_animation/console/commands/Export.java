@@ -5,26 +5,33 @@ import java.io.IOException;
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
 import com.github.sam54123.mc_animation.system.compiler.AnimCompiler;
+import com.github.sam54123.mc_animation.utils.MCAnimStatics;
 
 public class Export extends CommandBase {
 
 	public Export()
 	{
-		requiredArgs = 1;
+		requiredArgs = 0;
+		requiresAnim = true;
 	}
 	
 	@Override
 	public boolean onRun(Console console, String[] args) 
 	{
-		if (console.loadedAnim == null) 
+		String path;
+		
+		if (args.length < 1)
 		{
-			System.out.println("No animation loaded!");
-			return false;
+			path = console.loadedAnim.getFolder();
+		}
+		else
+		{
+			path = MCAnimStatics.formatPath(args[0]);
 		}
 		
 		try 
 		{
-			AnimCompiler.compileAnimation(console.loadedAnim, args[0]);
+			AnimCompiler.compileAnimation(console.loadedAnim, path);
 		}
 		catch(IOException e)
 		{
@@ -48,7 +55,7 @@ public class Export extends CommandBase {
 	@Override
 	public String getUsage() 
 	{
-		return "export [export path]";
+		return "export <path>";
 	}
 
 	@Override

@@ -13,13 +13,35 @@ public class Help extends CommandBase {
 		Set<String> keys = Console.commands.keySet();
 		
 		CommandBase command;
-		for (String k : keys)
+		if (args.length < 1)
 		{
-			command = Console.commands.get(k);
-			System.out.println(command.getUsage()+": "+command.getDescription());
+			
+			for (String k : keys)
+			{
+				command = Console.commands.get(k);
+				System.out.println(command.getUsage()+": "+command.getDescription());
+			}
+			
+			return true;
+		}
+		else
+		{
+			if (keys.contains(args[0]))
+			{
+				command = Console.commands.get(args[0]);
+				System.out.println(command.getUsage()+": "+command.getDescription());
+				
+				return true;
+			}
+			else
+			{
+				System.out.println("Unknown command");
+				return false;
+			}
 		}
 		
-		return true;
+		
+		
 	}
 
 	@Override
@@ -31,7 +53,7 @@ public class Help extends CommandBase {
 	@Override
 	public String getUsage() 
 	{
-		return "help";
+		return "help <command>";
 	}
 
 	@Override
