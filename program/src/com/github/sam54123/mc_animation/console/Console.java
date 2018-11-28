@@ -55,6 +55,7 @@ public class Console {
 		new Save().register();
 		new Set().register();
 		new MCCommand().register();
+		new Quit().register();
 	}
 	
 	private void loop()
