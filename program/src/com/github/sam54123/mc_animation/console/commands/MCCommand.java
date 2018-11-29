@@ -85,6 +85,7 @@ public class MCCommand extends CommandBase {
 			console.loadedAnim.setCommand(frame, string);
 			System.out.println("Added command '"+ string + "' to frame "+ frame);
 			System.out.println("Note: Animation will not play if command is improperly formatted");
+			console.loadedAnim.isSaved = false;
 			return true;
 		}
 		

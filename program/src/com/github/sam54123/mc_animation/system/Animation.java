@@ -23,6 +23,7 @@ public class Animation
 	private int id;
 	private AnimFrame[] frames;
 	
+	public boolean isSaved = true;
 	
 	
 	private boolean isInitialized = false;
@@ -103,6 +104,8 @@ public class Animation
 			
 		this.path = path;
 		System.out.println("Sucessfully wrote to "+ path);
+		
+		isSaved = true;
 		return new File(path);
 		
 	}

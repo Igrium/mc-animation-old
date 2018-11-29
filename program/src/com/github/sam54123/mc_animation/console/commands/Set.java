@@ -38,7 +38,10 @@ public class Set extends CommandBase {
 		else
 		{
 			System.out.println("Parameters: id, looping");
+			return false;
 		}
+		
+		console.loadedAnim.isSaved = false;
 		
 		return true;
 	}

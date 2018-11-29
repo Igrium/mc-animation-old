@@ -22,12 +22,26 @@ public class Save extends CommandBase {
 		// Set path to the passed path if present, otherwise set it to the one in the animation
 		if (args.length >= 1)
 		{
+			
 			path = args[0];
-			String extention = path.substring(path.lastIndexOf("."));
+			
+			String extention;
+			try
+			{
+				 extention = path.substring(path.lastIndexOf("."));
+			}
+			catch(IndexOutOfBoundsException e) 
+			{
+				 extention = "noExtention";
+			}
+			
 			if (!extention.matches(".mcanim"))
 			{
-				path = MCAnimStatics.formatPath(path);
+				path = MCAnimStatics.formatPath(path)+console.loadedAnim.name+".mcanim";
 			}
+			
+			
+			
 		}
 		else
 		{
