@@ -66,7 +66,7 @@ def write_mcanim(context, object, id, looping, path):
     
     # add additional metadata to file
     output = {
-        "version": "0.1",
+        "version": "0.2",
         "id": id,
         "looping": looping,
         "frames": frames
@@ -99,9 +99,8 @@ def write_frame(context, object, frame):
     left_leg = convert_array(get_rotation(bones['left_leg']), False)
     right_leg = convert_array(get_rotation(bones['right_leg']), False)
     head = convert_array(get_rotation(bones['head']), True)
+    location = [round(bones['root'].location[0], 2), round(bones['root'].location[1], 2),  round(bones['root'].location[2], 2)]
     rotation = round(math.degrees(get_rotation(bones['root'])[1]), 2) 
-    
-    print(rotation)
 	
     # output found values to dictionary
     output = {
@@ -111,6 +110,7 @@ def write_frame(context, object, frame):
         "left_leg": left_leg,
         "right_leg": right_leg,
         "head": head,
+        "location": location,
         "rotation": rotation
     }
     
