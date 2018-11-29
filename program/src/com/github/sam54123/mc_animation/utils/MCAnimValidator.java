@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 public class MCAnimValidator 
 {
+	
 	public static boolean validate(JSONObject jsonObject)
 	{
 		
@@ -18,7 +19,7 @@ public class MCAnimValidator
 			return false;
 		}
 		
-		if (version.matches("0.1"))
+		if (version.matches(ProgramConstants.ANIMVERSION))
 		{
 			// Check for ID
 			try 
@@ -56,7 +57,7 @@ public class MCAnimValidator
 				{
 					if (!checkArray(frame.getJSONArray("body")) || !checkArray(frame.getJSONArray("left_arm")) ||
 							!checkArray(frame.getJSONArray("right_arm")) || !checkArray(frame.getJSONArray("left_leg")) ||
-							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")))
+							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")) || !checkArray(frame.getJSONArray("location")))
 					{
 						return false;
 					}
@@ -75,6 +76,11 @@ public class MCAnimValidator
 				
 			}
 		}
+		else
+		{
+			System.out.println("Incorrect version: "+ version +" Expected "+ ProgramConstants.ANIMVERSION);
+			return false;
+		}
 		return true;
 	}
 	
@@ -84,7 +90,6 @@ public class MCAnimValidator
 		
 		if (array == null || array.length() != 3)
 		{
-			System.out.println("Incorrect Array");
 			return false;
 		}
 		

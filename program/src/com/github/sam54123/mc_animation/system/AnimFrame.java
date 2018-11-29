@@ -10,9 +10,10 @@ public class AnimFrame
 	public float[] leftLeg;
 	public float[] rightLeg;
 	public float[] head;
+	public float[] location;
 	public float rotation;
 	
-	public AnimFrame(float[] body, float[] leftArm, float[] rightArm, float[] leftLeg, float[] rightLeg, float[] head, float rotation)
+	public AnimFrame(float[] body, float[] leftArm, float[] rightArm, float[] leftLeg, float[] rightLeg, float[] head, float[] location, float rotation)
 	{
 		this.body = body;
 		this.leftArm = leftArm;
@@ -20,6 +21,7 @@ public class AnimFrame
 		this.leftLeg = leftLeg;
 		this.rightLeg = rightLeg;
 		this.head = head;
+		this.location = location;
 		this.rotation = rotation;
 	}
 	

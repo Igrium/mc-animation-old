@@ -48,11 +48,26 @@ public class AnimCompiler
 		writer.newLine();
 		writer.write("# looping: "+ animation.looping);
 		writer.newLine();
+		writer.write("# resetPos: "+ animation.resetPos);
+		writer.newLine();
 		
 		// Close animation if not looping
 		if (!animation.looping)
 		{
 			writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.ANIMATION +" 0");
+			writer.newLine();
+		}
+		
+		// Calculate first 0,0,0 relative to last frame and add to function
+		if (animation.resetPos)
+		{
+			AnimFrame lastFrame = animation.getFrame(animation.length()-1);
+			
+			float resetX = lastFrame.location[0]*-1;
+			float resetY = lastFrame.location[1]*-1;
+			float resetZ = lastFrame.location[2]*-1;
+			
+			writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run tp @s ~"+resetX+" ~"+resetY+" ~"+resetZ);
 			writer.newLine();
 		}
 		
@@ -63,12 +78,33 @@ public class AnimCompiler
 		writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.FRAME +" 0");
 		writer.newLine();
 		
-		String generated;
+		float[] relativePos;
 		for (int i = 0; i < frames.length; i++)
 		{
-			generated = formatFrame(frames[i], "@s[scores={"+ MCCommandConstants.FRAME + "="+i+"}]");
-			writer.write(generated);
+			writer.write(formatFrame(frames[i], "@s[scores={"+ MCCommandConstants.FRAME + "="+i+"}]"));
 			writer.newLine();
+			
+			// figure out position relative to last frame.
+			if (i == 0)
+			{
+				relativePos = frames[i].location;
+			}
+			else
+			{
+				relativePos = new float[3];
+				relativePos[0] = frames[i].location[0] - frames[i-1].location[0];
+				relativePos[1] = frames[i].location[1] - frames[i-1].location[1];
+				relativePos[2] = frames[i].location[2] - frames[i-1].location[2];
+			}
+			
+			// Only write teleport command if there's movement
+			if (!(relativePos[0] == 0.0f && relativePos[1] == 0.0f && relativePos[2] == 0.0f))
+			{
+				writer.write("execute at @s run tp @s[scores={"+ MCCommandConstants.FRAME + "="+i+"}] ~"+relativePos[0]+" ~"+relativePos[1]+" ~"+relativePos[2]);
+				writer.newLine();
+			}
+			
+			
 		}
 		// Get all commands
 		AnimCommand[] commands = animation.getCommandsAsArray();

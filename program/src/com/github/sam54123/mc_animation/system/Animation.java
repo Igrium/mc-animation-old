@@ -19,6 +19,7 @@ public class Animation
 	public String name;
 	public boolean looping;
 	public String path;
+	public boolean resetPos;
 	private ArrayList<AnimCommand> commands;
 	private int id;
 	private AnimFrame[] frames;
@@ -214,7 +215,7 @@ public class Animation
 		// output frames to frames array
 		if (version.matches(ProgramConstants.ANIMVERSION))
 		{
-			System.out.println("Interpreting mcanim version 0.1");
+			System.out.println("Interpreting mcanim version "+version);
 			
 			JSONArray jsonArray = jsonObject.getJSONArray("frames");
 			JSONObject object;
@@ -225,6 +226,16 @@ public class Animation
 			
 			// get is Looping
 			looping = jsonObject.getBoolean("looping");
+			
+			// resetWhenDone is optional
+			try
+			{
+				resetPos = jsonObject.getBoolean("resetPos");
+			}
+			catch(JSONException e)
+			{
+				resetPos = false;
+			}
 			
 			// create new AnimFrame array of the right length
 			frames = new AnimFrame[jsonArray.length()];
@@ -241,6 +252,7 @@ public class Animation
 						JSONArrayToFloat(object.getJSONArray("left_leg")),
 						JSONArrayToFloat(object.getJSONArray("right_leg")),
 						JSONArrayToFloat(object.getJSONArray("head")),
+						JSONArrayToFloat(object.getJSONArray("location")),
 						object.getFloat("rotation"));
 				
 				// Output command (if exists) to commands arraylist
@@ -251,6 +263,7 @@ public class Animation
 				{
 					commands.add(new AnimCommand(command, i));
 				}
+				
 			}
 			
 		}
@@ -266,45 +279,52 @@ public class Animation
 		jsonObject.put("version", ProgramConstants.ANIMVERSION);
 		jsonObject.put("id", id);
 		jsonObject.put("looping", looping);
+		jsonObject.put("resetPos", resetPos);
 		
 		// add frames and commands
 		JSONArray jsonFrames = new JSONArray();
 		
 		for (int i = 0; i < frames.length; i++)
 		{
-			
-			AnimFrame frame = frames[i];
-			
-			JSONObject jsonFrame = new JSONObject();
-			
-			// Make JSONArrays of all the the body parts
-			JSONArray body = new JSONArray(frame.body);
-			JSONArray left_arm = new JSONArray(frame.leftArm);
-			JSONArray right_arm = new JSONArray(frame.rightArm);
-			JSONArray left_leg = new JSONArray(frame.leftLeg);
-			JSONArray right_leg = new JSONArray(frame.rightLeg);
-			JSONArray head = new JSONArray(frame.head);
-			
-			// Add all JSONArrays to frame
-			jsonFrame.put("body", body);
-			jsonFrame.put("left_arm", left_arm);
-			jsonFrame.put("right_arm", right_arm);
-			jsonFrame.put("left_leg", left_leg);
-			jsonFrame.put("right_leg", right_leg);
-			jsonFrame.put("head", head);
-			jsonFrame.put("rotation", frame.rotation);
-			
-			AnimCommand command = getCommandByFrame(i);
-			
-			if (command != null)
-			{
-				jsonFrame.put("command", command.getCommand());
-			}
-			
-			jsonFrames.put(jsonFrame);
+			jsonFrames.put(getJSONFrame(i));
 		}
 		
 		jsonObject.put("frames", jsonFrames);
+	}
+	
+	private JSONObject getJSONFrame(int i)
+	{
+		AnimFrame frame = frames[i];
+		
+		JSONObject jsonFrame = new JSONObject();
+		
+		// Make JSONArrays of all the the body parts
+		JSONArray body = new JSONArray(frame.body);
+		JSONArray left_arm = new JSONArray(frame.leftArm);
+		JSONArray right_arm = new JSONArray(frame.rightArm);
+		JSONArray left_leg = new JSONArray(frame.leftLeg);
+		JSONArray right_leg = new JSONArray(frame.rightLeg);
+		JSONArray head = new JSONArray(frame.head);
+		JSONArray location = new JSONArray(frame.location);
+		
+		// Add all JSONArrays to frame
+		jsonFrame.put("body", body);
+		jsonFrame.put("left_arm", left_arm);
+		jsonFrame.put("right_arm", right_arm);
+		jsonFrame.put("left_leg", left_leg);
+		jsonFrame.put("right_leg", right_leg);
+		jsonFrame.put("head", head);
+		jsonFrame.put("location", location);
+		jsonFrame.put("rotation", frame.rotation);
+		
+		AnimCommand command = getCommandByFrame(i);
+		
+		if (command != null)
+		{
+			jsonFrame.put("command", command.getCommand());
+		}
+		
+		return jsonFrame;
 	}
 	
 	// Convert a JSONArray to a float array
