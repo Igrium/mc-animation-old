@@ -3,6 +3,8 @@ package com.github.sam54123.mc_animation.system.compiler;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import com.github.sam54123.mc_animation.utils.MCAnimStatics;
 import com.github.sam54123.mc_animation.utils.MCCommandConstants;
 
 import com.github.sam54123.mc_animation.system.AnimCommand;
@@ -97,14 +99,20 @@ public class AnimCompiler
 				relativePos[2] = frames[i].location[2] - frames[i-1].location[2];
 			}
 			
+			// Convert the relative position to one relative to the armor stand's initial rotation
+			float[] relativePos2D = {relativePos[0], relativePos[2]};
+			relativePos2D = MCAnimStatics.rotateVector2D(relativePos2D, Math.toRadians(frames[i].rotation)*-1);
+			relativePos[0] = relativePos2D[0];
+			relativePos[2] = relativePos2D[1];
+			
+			
 			// Only write teleport command if there's movement
 			if (!(relativePos[0] == 0.0f && relativePos[1] == 0.0f && relativePos[2] == 0.0f))
 			{
-				writer.write("execute at @s run tp @s[scores={"+ MCCommandConstants.FRAME + "="+i+"}] ~"+relativePos[0]+" ~"+relativePos[1]+" ~"+relativePos[2]);
+				// Round so Minecraft doesn't throw a fit
+				writer.write("execute at @s run tp @s[scores={"+ MCCommandConstants.FRAME + "="+i+"}] ^"+Math.round(relativePos[0]*1000d)/1000d+" ^"+Math.round(relativePos[1]*1000d)/1000d+" ^"+Math.round(relativePos[2]*1000d)/1000d);
 				writer.newLine();
 			}
-			
-			
 		}
 		// Get all commands
 		AnimCommand[] commands = animation.getCommandsAsArray();

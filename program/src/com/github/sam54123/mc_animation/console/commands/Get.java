@@ -4,6 +4,7 @@ package com.github.sam54123.mc_animation.console.commands;
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
 import com.github.sam54123.mc_animation.system.AnimCommand;
+import com.github.sam54123.mc_animation.system.AnimFrame;
 
 public class Get extends CommandBase {
  
@@ -55,6 +56,17 @@ public class Get extends CommandBase {
 			for (AnimCommand command : commands) 
 			{
 				System.out.println("Frame: " + command.getFrame() + ", Command: \"" + command.getCommand() + "\"");
+			}
+		}
+		
+		if(args[0].matches("frames"))
+		{
+			AnimFrame frames[] = console.loadedAnim.getFramesAsArray();
+			AnimFrame f;
+			for (int i = 0; i < frames.length; i++)
+			{
+				f = frames[i];
+				System.out.println(String.valueOf(i) + ": " + f.toString());
 			}
 		}
 		else

@@ -286,45 +286,10 @@ public class Animation
 		
 		for (int i = 0; i < frames.length; i++)
 		{
-			jsonFrames.put(getJSONFrame(i));
+			jsonFrames.put(frames[i].toJSONObject(getCommandByFrame(i)));
 		}
 		
 		jsonObject.put("frames", jsonFrames);
-	}
-	
-	private JSONObject getJSONFrame(int i)
-	{
-		AnimFrame frame = frames[i];
-		
-		JSONObject jsonFrame = new JSONObject();
-		
-		// Make JSONArrays of all the the body parts
-		JSONArray body = new JSONArray(frame.body);
-		JSONArray left_arm = new JSONArray(frame.leftArm);
-		JSONArray right_arm = new JSONArray(frame.rightArm);
-		JSONArray left_leg = new JSONArray(frame.leftLeg);
-		JSONArray right_leg = new JSONArray(frame.rightLeg);
-		JSONArray head = new JSONArray(frame.head);
-		JSONArray location = new JSONArray(frame.location);
-		
-		// Add all JSONArrays to frame
-		jsonFrame.put("body", body);
-		jsonFrame.put("left_arm", left_arm);
-		jsonFrame.put("right_arm", right_arm);
-		jsonFrame.put("left_leg", left_leg);
-		jsonFrame.put("right_leg", right_leg);
-		jsonFrame.put("head", head);
-		jsonFrame.put("location", location);
-		jsonFrame.put("rotation", frame.rotation);
-		
-		AnimCommand command = getCommandByFrame(i);
-		
-		if (command != null)
-		{
-			jsonFrame.put("command", command.getCommand());
-		}
-		
-		return jsonFrame;
 	}
 	
 	// Convert a JSONArray to a float array

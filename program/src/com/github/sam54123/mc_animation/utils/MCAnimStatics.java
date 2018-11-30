@@ -44,4 +44,14 @@ public class MCAnimStatics
 		}
 		
 	}
+	
+	// Rotates the given vector around the origin by the given value in radians.
+	public static float[] rotateVector2D(float[] vec, double rot)
+	{
+		float[] vector = new float[2];
+		vector[0] = (float)(vec[0] * Math.cos(rot) - vec[1] * Math.sin(rot));
+	    vector[1] = (float)(vec[0] * Math.sin(rot) + vec[1] * Math.cos(rot));
+		
+		return vector;
+	}
 }
