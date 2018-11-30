@@ -16,7 +16,7 @@ public class AnimCompiler
 	// Formats a single frame of an animation
 	public static String formatFrame(AnimFrame frame, String selector)
 	{
-		return "data merge entity " + selector + " {" + formatPose(frame) + ",Rotation:["+ formatFloat(frame.rotation)+ ",0.0f]}";
+		return "data merge entity " + selector + " {" + formatPose(frame) + "}";
 	}
 	
 	public static String formatAnimCall(Animation anim)
@@ -81,8 +81,10 @@ public class AnimCompiler
 		writer.newLine();
 		
 		float[] relativePos;
+		float relativeRot;
 		for (int i = 0; i < frames.length; i++)
 		{
+			
 			writer.write(formatFrame(frames[i], "@s[scores={"+ MCCommandConstants.FRAME + "="+i+"}]"));
 			writer.newLine();
 			
@@ -104,6 +106,23 @@ public class AnimCompiler
 			relativePos2D = MCAnimStatics.rotateVector2D(relativePos2D, Math.toRadians(frames[i].rotation)*-1);
 			relativePos[0] = relativePos2D[0];
 			relativePos[2] = relativePos2D[1];
+			
+			// find rotation relative to last frame
+			if (i==0)
+			{
+				relativeRot = frames[i].rotation;
+			}
+			else
+			{
+				relativeRot = frames[i].rotation - frames[i-1].rotation;
+			}
+						
+			// Only write rotation command if there's rotation
+			if(relativeRot != 0.0f) 
+			{
+				writer.write("execute at @s run tp @s[scores={"+ MCCommandConstants.FRAME + "="+i+"}] ~ ~ ~ ~"+ relativeRot +" ~");
+				writer.newLine();
+			}
 			
 			
 			// Only write teleport command if there's movement
@@ -131,8 +150,6 @@ public class AnimCompiler
 		writer.write("scoreboard players add @s "+ MCCommandConstants.FRAME + " 1");
 		writer.newLine();
 			
-		
-		
 		
 		writer.close();
 		
