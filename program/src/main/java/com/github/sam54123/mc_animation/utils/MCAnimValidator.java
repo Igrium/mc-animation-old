@@ -69,7 +69,7 @@ public class MCAnimValidator
 				
 				try
 				{
-					frame.getFloat("rotation");
+					frame.getDouble("rotation");
 				} catch (JSONException e) {
 					return false;
 				}

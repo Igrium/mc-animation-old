@@ -253,7 +253,7 @@ public class Animation
 						JSONArrayToFloat(object.getJSONArray("right_leg")),
 						JSONArrayToFloat(object.getJSONArray("head")),
 						JSONArrayToFloat(object.getJSONArray("location")),
-						object.getFloat("rotation"));
+						(float)object.getDouble("rotation"));
 				
 				// Output command (if exists) to commands arraylist
 				
@@ -299,7 +299,7 @@ public class Animation
 		
 		for (int i = 0; i < array.length(); i++)
 		{
-			outArray[i] = array.getFloat(i);
+			outArray[i] = (float)array.getDouble(i);
 		}
 		
 		
