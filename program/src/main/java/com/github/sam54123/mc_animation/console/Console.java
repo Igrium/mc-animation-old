@@ -38,8 +38,7 @@ public class Console {
 		commands = new HashMap<String, CommandBase>();
 		registerCommands();
 
-		this.out.println("Minecraft Animation System "+ ProgramConstants.VERSION);
-		this.out.println("Type 'help' for a list of commands.");
+		commands.get("info").run(this, new String[0]);
 		
 		reader = new Scanner(source);
 		
@@ -64,6 +63,7 @@ public class Console {
 		new Set().register(commands);
 		new MCCommand().register(commands);
 		new Quit().register(commands);
+		new Info().register(commands);
 		new Help(commands).register(commands);
 	}
 	
@@ -85,7 +85,7 @@ public class Console {
 		}
 		else
 		{
-			System.out.println("Unknown command. Type 'help' for a list of comands.");
+			this.out.println("Unknown command '"+ command.name() +"'. Type 'help' for a list of comands.");
 		}
 		
 		command = null;

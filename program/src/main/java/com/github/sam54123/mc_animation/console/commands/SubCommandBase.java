@@ -57,7 +57,7 @@ public abstract class SubCommandBase extends CommandBase
 		}
 		else
 		{
-            console.out.println("Unknown command. Type '"+getPath()+" help' for a list of comands.");
+            console.out.println("Unknown command '" + getPath() + " " + args[0] + "'. Type '"+getPath()+" help' for a list of comands.");
             return false;
 		}
     }
