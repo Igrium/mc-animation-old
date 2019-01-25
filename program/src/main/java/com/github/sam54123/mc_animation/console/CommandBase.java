@@ -1,5 +1,7 @@
 package com.github.sam54123.mc_animation.console;
 
+import java.util.Map;
+
 public abstract class CommandBase 
 {
 	protected abstract boolean onRun(Console console, String[] args);
@@ -44,8 +46,8 @@ public abstract class CommandBase
 	
 	public abstract String getDescription();
 	
-	public void register()
+	public void register(Map<String, CommandBase> commands)
 	{
-		Console.commands.put(this.getName(), this);
+		commands.put(this.getName(), this);
 	}
 }

@@ -3,18 +3,18 @@ package com.github.sam54123.mc_animation.console;
 import java.util.ArrayList;
 
 // class that handles the seperation of arguements of a console command
-public class Command 
+public class TypedCommand 
 {
 	private String name;
 	private String[] args;
 	
-	public Command(String name, String[] args)
+	public TypedCommand(String name, String[] args)
 	{
 		this.name = name;
 		this.args = args;
 	}
 	
-	public Command(String input)
+	public TypedCommand(String input)
 	{
 		String[] split = input.split(" ");
 		ArrayList<String> argsList = new ArrayList<String>();

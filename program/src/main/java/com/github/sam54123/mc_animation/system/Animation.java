@@ -3,6 +3,7 @@ package com.github.sam54123.mc_animation.system;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.json.*;
@@ -173,6 +174,7 @@ public class Animation
 	// finds the command of the given frame
 	public AnimCommand getCommandByFrame(int frame) 
 	{
+
 		for (AnimCommand command : getCommandsAsArray())
 		{
 			if (command.getFrame() == frame)

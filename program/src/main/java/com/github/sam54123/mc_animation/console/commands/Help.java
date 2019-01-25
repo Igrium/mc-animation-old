@@ -1,16 +1,33 @@
 package com.github.sam54123.mc_animation.console.commands;
 
 import java.util.Set;
+import java.util.Map;
 
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
 
 public class Help extends CommandBase {
 
+	private Map<String, CommandBase> commands;
+
+	// A string of text to put at the beginning of help command usage. Useful for subcommands
+	private String prefix;
+
+	public Help(Map<String, CommandBase> commands, String prefix)
+	{
+		this.commands = commands;
+		this.prefix = prefix;
+	}
+
+	public Help(Map<String, CommandBase> commands)
+	{
+		this.commands = commands;
+	}
+
 	@Override
 	public boolean onRun(Console console, String[] args) 
 	{
-		Set<String> keys = Console.commands.keySet();
+		Set<String> keys = commands.keySet();
 		
 		CommandBase command;
 		if (args.length < 1)
@@ -18,7 +35,7 @@ public class Help extends CommandBase {
 			
 			for (String k : keys)
 			{
-				command = Console.commands.get(k);
+				command = commands.get(k);
 				System.out.println(command.getUsage()+": "+command.getDescription());
 			}
 			
@@ -28,7 +45,7 @@ public class Help extends CommandBase {
 		{
 			if (keys.contains(args[0]))
 			{
-				command = Console.commands.get(args[0]);
+				command = commands.get(args[0]);
 				System.out.println(command.getUsage()+": "+command.getDescription());
 				
 				return true;
@@ -53,7 +70,7 @@ public class Help extends CommandBase {
 	@Override
 	public String getUsage() 
 	{
-		return "help <command>";
+		return prefix + "help <command>";
 	}
 
 	@Override
