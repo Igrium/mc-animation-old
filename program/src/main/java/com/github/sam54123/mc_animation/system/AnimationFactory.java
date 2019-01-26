@@ -31,6 +31,7 @@ public class AnimationFactory extends AnimFactoryBase
     {
         animFactories = new HashMap<String, AnimFactoryBase>();
 
+        new AnimFactory0_1().register(animFactories);
         new AnimFactory0_2().register(animFactories);
     }
     

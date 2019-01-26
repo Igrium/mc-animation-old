@@ -10,7 +10,7 @@ import org.json.*;
 
 import com.github.sam54123.mc_animation.system.Animation;
 import com.github.sam54123.mc_animation.utils.JSONUtils;
-class AnimFactory0_2 extends AnimFactoryBase
+class AnimFactory0_1 extends AnimFactoryBase
 {
     @Override
 	public Animation loadAnimation(String path) 
@@ -91,14 +91,14 @@ class AnimFactory0_2 extends AnimFactoryBase
 				
 				// Make a new AnimFrame with the right values
 				
-				
+				// version 0.1 does not have a position value, enter 0.0f for it.
 				animation.frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
 					JSONArrayToFloat(object.getJSONArray("left_arm")),
 					JSONArrayToFloat(object.getJSONArray("right_arm")),
 					JSONArrayToFloat(object.getJSONArray("left_leg")),
 					JSONArrayToFloat(object.getJSONArray("right_leg")),
 					JSONArrayToFloat(object.getJSONArray("head")),
-					JSONArrayToFloat(object.getJSONArray("location")),
+					new float[]{0.0f, 0.0f, 0.0f},
 					(float)object.getDouble("rotation"));
 				
 				
@@ -170,8 +170,7 @@ class AnimFactory0_2 extends AnimFactoryBase
 				{
 					if (!checkArray(frame.getJSONArray("body")) || !checkArray(frame.getJSONArray("left_arm")) ||
 							!checkArray(frame.getJSONArray("right_arm")) || !checkArray(frame.getJSONArray("left_leg")) ||
-							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")) || 
-							!checkArray(frame.getJSONArray("location")))
+							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")))
 					{
 						return false;
 					}
@@ -212,6 +211,6 @@ class AnimFactory0_2 extends AnimFactoryBase
 
 	@Override
 	protected String getVersion() {
-		return "0.2";
+		return "0.1";
 	}
 }
