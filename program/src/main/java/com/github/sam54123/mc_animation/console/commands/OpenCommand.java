@@ -3,6 +3,7 @@ package com.github.sam54123.mc_animation.console.commands;
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
 import com.github.sam54123.mc_animation.system.Animation;
+import com.github.sam54123.mc_animation.system.AnimationFactory;
 
 public class OpenCommand extends CommandBase {
 
@@ -15,9 +16,9 @@ public class OpenCommand extends CommandBase {
 	public boolean onRun(Console console, String[] args) 
 	{
 		
-		Animation anim = new Animation(args[0]);
+		Animation anim = AnimationFactory.getInstance().loadAnimation(args[0]);
 		
-		if (!anim.isInitialized())
+		if (anim == null)
 		{
 			System.out.println("Animation failed to initialize");
 			return false;

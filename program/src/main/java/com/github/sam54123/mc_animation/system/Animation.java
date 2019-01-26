@@ -23,9 +23,9 @@ public class Animation
 	public boolean looping;
 	public String path;
 	public boolean resetPos;
-	private ArrayList<AnimCommand> commands;
-	private int id;
-	private AnimFrame[] frames;
+	protected ArrayList<AnimCommand> commands;
+	protected int id;
+	protected AnimFrame[] frames;
 	
 	/**
 	 * Has this animation been saved to disk since it's last modification
@@ -33,71 +33,6 @@ public class Animation
 	public boolean isSaved = true;
 	
 	private boolean isInitialized = false;
-	
-	
-	/**
-	 * Import an mcanim (json) file
-	 * @param path Path to import from
-	 */
-	public Animation(String path)
-	{
-		System.out.println("Opening "+path);
-		
-		// Validate path
-		
-		File file = new File(path);
-		
-		if (!file.exists())
-		{
-			System.out.println("Unknown File");
-			return;
-		}
-		
-		try
-		{
-			String extention = path.substring(path.lastIndexOf("."));
-			if (!extention.matches(".mcanim"))
-			{
-				System.out.println("Unknown filetype: " + extention);
-				return;
-			}
-		}
-		catch(IndexOutOfBoundsException e)
-		{
-			System.out.println("Unknown filetype");
-			return;
-		}
-			
-		
-		
-		this.path = file.getAbsolutePath();
-		
-		// Create animation
-		try
-		{
-			jsonObject = JSONUtils.getJSONObjectFromFile(path);
-		}
-		catch(JSONException e)
-		{
-			System.out.println("Incorrectly Formatted .mcanim");
-			return;
-		}
-		
-		if (!MCAnimValidator.validate(jsonObject))
-		{
-			System.out.println("Incorrectly Formatted .mcanim");
-			return;
-		}
-		
-		commands = new ArrayList<AnimCommand>();
-		
-		interpretJSON(jsonObject); 
-		
-		// set name
-		name = path.substring((path.lastIndexOf("\\")+1), path.lastIndexOf("."));
-		
-		isInitialized = true;
-	}
 	
 	/**
 	 * Saves the animation as a .mcanim file and updates path accordingly
@@ -262,85 +197,6 @@ public class Animation
 		return isInitialized;
 	}
 
-	// interpret the JSONObject and setup all this Animation Object's variables, will crash if invalid JSON.
-	private void interpretJSON(JSONObject jsonObject)
-	{
-		String version = jsonObject.getString("version");
-		
-		// output frames to frames array
-		if (version.matches(ProgramConstants.ANIMVERSION))
-		{
-			System.out.println("Interpreting mcanim version "+version);
-			
-			JSONArray jsonArray = jsonObject.getJSONArray("frames");
-			JSONObject object;
-			String command;
-			
-			// get ID
-			id = jsonObject.getInt("id");
-			
-			// get is Looping
-			looping = jsonObject.getBoolean("looping");
-			
-			// resetWhenDone is optional
-			try
-			{
-				resetPos = jsonObject.getBoolean("resetPos");
-			}
-			catch(JSONException e)
-			{
-				resetPos = false;
-			}
-			
-			// create new AnimFrame array of the right length
-			frames = new AnimFrame[jsonArray.length()];
-			
-			// Iterate over entire JSON array
-			for(int i = 0; i < jsonArray.length(); i++)
-			{
-				object = jsonArray.getJSONObject(i);
-				
-				// Make a new AnimFrame with the right values
-				if (version.matches("0.1"))
-				{
-					frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
-						JSONArrayToFloat(object.getJSONArray("left_arm")),
-						JSONArrayToFloat(object.getJSONArray("right_arm")),
-						JSONArrayToFloat(object.getJSONArray("left_leg")),
-						JSONArrayToFloat(object.getJSONArray("right_leg")),
-						JSONArrayToFloat(object.getJSONArray("head")),
-						new float[]{ 0.0f,0.0f,0.0f },
-						(float)object.getDouble("rotation"));
-				}
-				else
-				{
-					frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
-					JSONArrayToFloat(object.getJSONArray("left_arm")),
-					JSONArrayToFloat(object.getJSONArray("right_arm")),
-					JSONArrayToFloat(object.getJSONArray("left_leg")),
-					JSONArrayToFloat(object.getJSONArray("right_leg")),
-					JSONArrayToFloat(object.getJSONArray("head")),
-					JSONArrayToFloat(object.getJSONArray("location")),
-					(float)object.getDouble("rotation"));
-				}
-				
-				// Output command (if exists) to commands arraylist
-				
-				command = getCommand(object);
-				
-				if (command != null && !command.matches(""))
-				{
-					commands.add(new AnimCommand(command, i));
-				}
-				
-			}
-			
-		}
-		else
-		{
-			System.out.println("Unknown file version: " + version);
-		}
-	}
 	
 	/**
 	 * Outputs this animation to a JSONObject (used when saving to .mcanim)
@@ -364,33 +220,4 @@ public class Animation
 		
 		jsonObject.put("frames", jsonFrames);
 	}
-	
-	// Convert a JSONArray to a float array
-	private float[] JSONArrayToFloat(JSONArray array)
-	{
-		float[] outArray = new float[array.length()];
-		
-		for (int i = 0; i < array.length(); i++)
-		{
-			outArray[i] = (float)array.getDouble(i);
-		}
-		
-		
-		return outArray;
-	}
-	
-	// returns the command from the JASON object, if any
-	private String getCommand(JSONObject object)
-	{
-		
-		try
-		{
-			return object.getString("command");
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
-	}
-
 }
