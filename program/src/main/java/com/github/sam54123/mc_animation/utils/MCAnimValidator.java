@@ -4,6 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MCAnimValidator 
 {
 	
@@ -19,7 +22,8 @@ public class MCAnimValidator
 			return false;
 		}
 		
-		if (version.matches(ProgramConstants.ANIMVERSION))
+		
+		if (new ArrayList<String>(Arrays.asList(ProgramConstants.SUPPORTED_VERSIONS)).contains(version))
 		{
 			// Check for ID
 			try 
@@ -57,7 +61,8 @@ public class MCAnimValidator
 				{
 					if (!checkArray(frame.getJSONArray("body")) || !checkArray(frame.getJSONArray("left_arm")) ||
 							!checkArray(frame.getJSONArray("right_arm")) || !checkArray(frame.getJSONArray("left_leg")) ||
-							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")) || !checkArray(frame.getJSONArray("location")))
+							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")) || 
+							(!checkArray(frame.getJSONArray("location")) && !version.matches("0.1")))
 					{
 						return false;
 					}

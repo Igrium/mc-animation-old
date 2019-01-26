@@ -300,15 +300,29 @@ public class Animation
 			{
 				object = jsonArray.getJSONObject(i);
 				
-				// Make a new AnimFrame with the right value
-				frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
+				// Make a new AnimFrame with the right values
+				if (version.matches("0.1"))
+				{
+					frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
 						JSONArrayToFloat(object.getJSONArray("left_arm")),
 						JSONArrayToFloat(object.getJSONArray("right_arm")),
 						JSONArrayToFloat(object.getJSONArray("left_leg")),
 						JSONArrayToFloat(object.getJSONArray("right_leg")),
 						JSONArrayToFloat(object.getJSONArray("head")),
-						JSONArrayToFloat(object.getJSONArray("location")),
+						new float[]{ 0.0f,0.0f,0.0f },
 						(float)object.getDouble("rotation"));
+				}
+				else
+				{
+					frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
+					JSONArrayToFloat(object.getJSONArray("left_arm")),
+					JSONArrayToFloat(object.getJSONArray("right_arm")),
+					JSONArrayToFloat(object.getJSONArray("left_leg")),
+					JSONArrayToFloat(object.getJSONArray("right_leg")),
+					JSONArrayToFloat(object.getJSONArray("head")),
+					JSONArrayToFloat(object.getJSONArray("location")),
+					(float)object.getDouble("rotation"));
+				}
 				
 				// Output command (if exists) to commands arraylist
 				

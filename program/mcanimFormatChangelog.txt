@@ -1,0 +1,2 @@
+0.1: created .mcanim format
+0.2: added value for position
