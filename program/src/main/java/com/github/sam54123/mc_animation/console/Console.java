@@ -9,7 +9,6 @@ import java.util.Scanner;
 import com.github.sam54123.mc_animation.console.commands.*;
 import com.github.sam54123.mc_animation.console.commands.MCCommand.MCCommand;
 import com.github.sam54123.mc_animation.system.Animation;
-import com.github.sam54123.mc_animation.utils.ProgramConstants;
 
 public class Console {
 
@@ -64,6 +63,7 @@ public class Console {
 		new MCCommand().register(commands);
 		new Quit().register(commands);
 		new Info().register(commands);
+		new AnimVersions().register(commands);
 		new Help(commands).register(commands);
 	}
 	

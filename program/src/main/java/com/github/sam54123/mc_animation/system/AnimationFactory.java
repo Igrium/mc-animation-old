@@ -13,7 +13,7 @@ import com.github.sam54123.mc_animation.utils.JSONUtils;
  */
 public class AnimationFactory extends AnimFactoryBase
 {
-    Map<String, AnimFactoryBase> animFactories;
+    public Map<String, AnimFactoryBase> animFactories;
 
     // Optional singleton for easy method calling
     private static AnimationFactory instance;
