@@ -43,6 +43,10 @@ hs_err_pid*
 ### VisualStudioCode ###
 .vscode/*
 
+.classpath
+.project
+.settings/*
+
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history

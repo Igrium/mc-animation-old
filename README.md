@@ -1,10 +1,18 @@
-# Minecraft Animation System
-This is a system that allows you to export animations from blender into a custom file format called .mcanim, which can be imported by my java application and exported to a .mcfunction file.
+# What is this?
+The Minecraft Animation System is a set of programs designed to let you animate armor stands in Minecraft. This is a standalone Java program designed to import .mcanim files produced by a [Blender plugin](https://github.com/Sam54123/mc-animation-blender/) and compile them into a .mcfunction file that can be called in Minecraft.
 
-The blender plugin is the python file in addon/, so make sure that's what you install. The plugin requires a very specific rig which is provided.
+## Installation
+To install, first make sure you have Java installed on your computer. If you don't have it, download it from the [Oracle website](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).
 
-To download the Java program, either go to the Releases tab and download the latest release, or compile from source if you feel brave. In any case, once you have it, it's a command line program, so it must be run from a console. To do that on windows, navigate to the jar file in cmd, then type java -jar [jarname]. Type "open [path to file]" to open the animation. You can proceed to add commands and do what you like, and then type "export" to export the animation. The resulting file must be placed in the animations subfolder of the functions folder of your datapack. Make one if it does not exist.
+After you have obtained Java, download this program ether from the releases tab of this repo or download the source code and compile it yourself. The source code version will be more up to date, but might be more unstable, as it is under development.
 
-This system is in very early alpha, and will be a lot more user friendly later on. Make sure to add an issue to this repo if you find a bug.
+## To Use
+The Minecraft Animation Compiler is a command line program, which means you'll have to launch it from the command line. To do this, open Command Prompt on Windows or Terminal on Mac and navigate to the folder where you downloaded the jar. To open the program, type `java -jar mcanim.jar`  This will launch the program in the command line.
 
-Have Fun!
+To open an animation, type `open [mcanim file]`. Export the animation to an .mcfunction file by typing "export". You can optionally specify a folder path to export to. Once it has exported, place the resulting .mcfunction in a subfolder called "animations" of your functions folder in your datapack. The program will give you a command that you need to put in any tick function in order for the animation to work. You can also type `command set [frame] [command]` to add Minecraft console commands to be played on a particular frame. Type `help` to see other things the program can do.
+
+To play the animation ingame, add a 3 dummy objectives called `mc-anim.anim`, `mc-anim.frame`, and `mc-anim.pause` to your world. This can be done through a function or manually. Next, set the `mc-anim.anim` objective of any armor stand (preferably one without gravity or a base and with arms) to the Animation ID of your animation. If `mc-anim.pause` is not 1 for the armor stand, the animation should play. Animation IDs MUST be unique (no more than one animation per ID) or the system will NOT work.
+
+## Contact
+
+This is still very early alpha software. If you spot any bugs, make sure to tell me. You can email me at thesam54123@gmail.com. If you feel you can improve apon this and the related repos, feel free to create a pull request. This is build in Java 1.8.0
