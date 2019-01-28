@@ -2,11 +2,9 @@ package com.github.sam54123.mc_animation.console.commands;
 
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
-import com.github.sam54123.mc_animation.utils.ProgramConstants;
 import com.github.sam54123.mc_animation.system.AnimationFactory;
 
 import java.util.Set;
-import java.util.Arrays;
 
 public class AnimVersions extends CommandBase
 {

@@ -1,6 +1,5 @@
 package com.github.sam54123.mc_animation.utils;
 
-import java.util.ArrayList;
 
 public class MCAnimStatics 
 {

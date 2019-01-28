@@ -2,6 +2,8 @@ game/*
 test/*
 *anim-*
 
+DevFiles/*
+
 *.DS_Store
 
 # blender stuff
