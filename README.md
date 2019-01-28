@@ -1,5 +1,5 @@
 # What is this?
-The Minecraft Animation System is a set of programs designed to let you animate armor stands in Minecraft. This is a standalone Java program designed to import .mcanim files produced by a [Blender plugin](https://github.com/Sam54123/mc-animation-blender/) and compile them into a .mcfunction file that can be called in Minecraft.
+The Minecraft Animation System is a set of programs designed to let you animate armor stands in Minecraft. This is a standalone Java program designed to import .mcanim files produced by a [Blender plugin](https://github.com/Sam54123/mc-animation-blender/) and compile them into a .mcfunction file that can be called in Minecraft. [Video Tutorial](https://youtu.be/QrI1A568HvQ)
 
 ## Installation
 To install, first make sure you have Java installed on your computer. If you don't have it, download it from the [Oracle website](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html).
