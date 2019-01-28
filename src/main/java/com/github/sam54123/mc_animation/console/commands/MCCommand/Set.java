@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
-import com.github.sam54123.mc_animation.system.AnimCommand;
 
 public class Set extends CommandBase
 {

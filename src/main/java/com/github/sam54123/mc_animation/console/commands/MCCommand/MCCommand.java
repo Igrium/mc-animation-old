@@ -1,13 +1,11 @@
 package com.github.sam54123.mc_animation.console.commands.MCCommand;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Map;
-import java.util.HashMap;
 
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.commands.SubCommandBase;
-import com.github.sam54123.mc_animation.console.Console;
+
 
 
 public class MCCommand extends SubCommandBase {

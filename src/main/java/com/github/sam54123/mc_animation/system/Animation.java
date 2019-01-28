@@ -7,9 +7,7 @@ import java.util.ArrayList;
 
 import org.json.*;
 
-import com.github.sam54123.mc_animation.utils.JSONUtils;
 import com.github.sam54123.mc_animation.utils.MCAnimStatics;
-import com.github.sam54123.mc_animation.utils.MCAnimValidator;
 import com.github.sam54123.mc_animation.utils.ProgramConstants;
 
 /**
