@@ -12,8 +12,7 @@ import com.github.sam54123.mc_animation.system.Animation;
 
 public class Console {
 
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {
 		Console console = new Console(System.in, System.out);
 		console.activate(args);
 	}
@@ -25,14 +24,12 @@ public class Console {
 	
 	public static Map<String, CommandBase> commands;
 	
-	public Console(InputStream source, PrintStream out)
-	{
+	public Console(InputStream source, PrintStream out) {
 		this.source = source;
 		this.out = out;
 	}
 
-	public void activate(String[] args)
-	{
+	public void activate(String[] args) {
 		// register commands
 		commands = new HashMap<String, CommandBase>();
 		registerCommands();
@@ -42,19 +39,16 @@ public class Console {
 		reader = new Scanner(source);
 		
 		// run on the the given file if present
-		if (args.length > 1)
-		{
+		if (args.length > 1) {
 			System.exit(0);
 		}
 		
-		while (true)
-		{
+		while (true) {
 			loop();
 		}
 	}
 	
-	private void registerCommands()
-	{
+	private void registerCommands() {
 		new OpenCommand().register(commands);
 		new Get().register(commands);
 		new Export().register(commands);
@@ -67,36 +61,26 @@ public class Console {
 		new Help(commands).register(commands);
 	}
 	
-	private void loop()
-	{
+	private void loop() {
 		String input = reader.nextLine();
 		
 		TypedCommand command = new TypedCommand(input);
 		
 		// make sure the user actually typed something
-		if(command.name().matches(""))
-		{
+		if(command.name().matches("")) {
 			return;
 		}
 		
-		if (commands.containsKey(command.name()))
-		{
+		if (commands.containsKey(command.name())) {
 			commands.get(command.name()).run(this, command.args());
-		}
-		else
-		{
+		} else {
 			this.out.println("Unknown command '"+ command.name() +"'. Type 'help' for a list of comands.");
 		}
-		
 		command = null;
 	}
 	
-	public Scanner reader()
-	{
+	public Scanner reader() {
 		return reader;
 	}
-	
-	
-	
 	
 }

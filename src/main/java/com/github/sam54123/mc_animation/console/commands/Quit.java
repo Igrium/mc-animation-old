@@ -8,11 +8,9 @@ import com.github.sam54123.mc_animation.console.Console;
 public class Quit extends CommandBase {
 
 	@Override
-	protected boolean onRun(Console console, String[] args) 
-	{
+	protected boolean onRun(Console console, String[] args) {
 		// Save animation before close
-		if((console.loadedAnim != null) && !console.loadedAnim.isSaved)
-		{
+		if((console.loadedAnim != null) && !console.loadedAnim.isSaved) {
 			System.out.println("You have unsaved changes. Would you like to save your animation first? (y/n)");
 			
 			String input = console.reader().nextLine();
@@ -33,20 +31,17 @@ public class Quit extends CommandBase {
 	}
 
 	@Override
-	public String getName() 
-	{
+	public String getName() {
 		return "quit";
 	}
 
 	@Override
-	public String getUsage() 
-	{
+	public String getUsage() {
 		return "quit";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Quits the program";
 	}
 

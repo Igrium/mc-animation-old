@@ -9,10 +9,8 @@ import com.github.sam54123.mc_animation.utils.MCAnimStatics;
 public class Save extends CommandBase {
 
 	@Override
-	protected boolean onRun(Console console, String[] args) 
-	{
-		if (console.loadedAnim == null)
-		{
+	protected boolean onRun(Console console, String[] args) {
+		if (console.loadedAnim == null) {
 			System.out.println("No animation loaded!");
 			return false;
 		}
@@ -20,8 +18,7 @@ public class Save extends CommandBase {
 		String path;
 		
 		// Set path to the passed path if present, otherwise set it to the one in the animation
-		if (args.length >= 1)
-		{
+		if (args.length >= 1) {
 			
 			path = args[0];
 			
@@ -40,42 +37,32 @@ public class Save extends CommandBase {
 				path = MCAnimStatics.formatPath(path)+console.loadedAnim.name+".mcanim";
 			}
 			
-			
-			
-		}
-		else
-		{
+		} else {
 			path = console.loadedAnim.path;
 		}
 		
 		// Try to save the animation
-		try
-		{
+		try {
 			console.loadedAnim.save(path);
 			return true;
-		}
-		catch(IOException e)
-		{
+		} catch(IOException e) {
 			System.out.println("File failed to save...");
 			return false;
 		}
 	}
 
 	@Override
-	public String getName() 
-	{
+	public String getName() {
 		return "save";
 	}
 
 	@Override
-	public String getUsage() 
-	{
+	public String getUsage() {
 		return "save <path>";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Saves the current animation to a .mcanim file";
 	}
 

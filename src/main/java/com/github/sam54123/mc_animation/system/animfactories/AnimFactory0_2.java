@@ -7,11 +7,9 @@ import org.json.*;
 import com.github.sam54123.mc_animation.system.Animation;
 import com.github.sam54123.mc_animation.utils.JSONUtils;
 import com.github.sam54123.mc_animation.system.AnimFrame;
-public class AnimFactory0_2 extends AnimFactoryBase
-{
+public class AnimFactory0_2 extends AnimFactoryBase {
     @Override
-	public Animation loadAnimation(String path) 
-	{
+	public Animation loadAnimation(String path) {
         System.out.println("Opening "+path);
 		
 		// Validate path
@@ -23,18 +21,14 @@ public class AnimFactory0_2 extends AnimFactoryBase
 		animation.path = file.getAbsolutePath();
 		
 		// Create animation
-		try
-		{
+		try {
 			animation.jsonObject = JSONUtils.getJSONObjectFromFile(path);
-		}
-		catch(JSONException e)
-		{
+		} catch(JSONException e) {
 			System.out.println("Incorrectly Formatted .mcanim");
 			return null;
 		}
 		
-		if (!validate(animation.jsonObject))
-		{
+		if (!validate(animation.jsonObject)) {
 			System.out.println("Incorrectly Formatted .mcanim");
 			return null;
 		}
@@ -47,13 +41,11 @@ public class AnimFactory0_2 extends AnimFactoryBase
 		return animation;
 	}
 
-	private void interpritJSON(Animation animation, JSONObject jsonObject) 
-	{
+	private void interpritJSON(Animation animation, JSONObject jsonObject) {
 		String version = jsonObject.getString("version");
 		
 		// output frames to frames array
-		if (version.matches(getVersion()))
-		{
+		if (version.matches(getVersion())) {
 			System.out.println("Interpreting mcanim version "+version);
 			
 			JSONArray jsonArray = jsonObject.getJSONArray("frames");
@@ -67,12 +59,9 @@ public class AnimFactory0_2 extends AnimFactoryBase
 			animation.looping = jsonObject.getBoolean("looping");
 			
 			// resetWhenDone is optional
-			try
-			{
+			try {
 				animation.resetPos = jsonObject.getBoolean("resetPos");
-			}
-			catch(JSONException e)
-			{
+			} catch(JSONException e) {
 				animation.resetPos = false;
 			}
 			
@@ -80,8 +69,7 @@ public class AnimFactory0_2 extends AnimFactoryBase
 			AnimFrame[] frames = new AnimFrame[jsonArray.length()];
 
 			// Iterate over entire JSON array
-			for(int i = 0; i < jsonArray.length(); i++)
-			{
+			for(int i = 0; i < jsonArray.length(); i++) {
 				object = jsonArray.getJSONObject(i);
 				
 				// Make a new AnimFrame with the right values
@@ -98,22 +86,16 @@ public class AnimFactory0_2 extends AnimFactoryBase
 				
 				
 				// Output command (if exists) to commands arraylist
-			
-
 				command = getCommand(object);
 				
-				if (command != null && !command.matches(""))
-				{
+				if (command != null && !command.matches("")) {
 					animation.setCommand(i, command);
 				}
 				
 			}
-
 			animation.setFrameArray(frames);
-			
 		}
-		else
-		{
+		else {
 			System.out.println("Unknown file version: " + version);
 		}
 	}
@@ -122,27 +104,23 @@ public class AnimFactory0_2 extends AnimFactoryBase
 	{
 		// Check for version
 		String version;
-		try
-		{
+		try {
 			version = jsonObject.getString("version");
 		} catch(JSONException e) {
 			return false;
 		}
 		
 		
-		if (version.matches(getVersion()))
-		{
+		if (version.matches(getVersion())) {
 			// Check for ID
-			try 
-			{
+			try {
 				jsonObject.getInt("id");
 			} catch(JSONException e) {
 				return false;
 			}
 			
 			// Check for looping
-			try 
-			{
+			try {
 				jsonObject.getBoolean("looping");
 			} catch(JSONException e) {
 				return false;
@@ -150,8 +128,7 @@ public class AnimFactory0_2 extends AnimFactoryBase
 			
 			// Check frames
 			JSONArray frames;
-			try
-			{
+			try {
 				frames = jsonObject.getJSONArray("frames");
 			} catch(JSONException e) {
 				return false;
@@ -160,12 +137,10 @@ public class AnimFactory0_2 extends AnimFactoryBase
 			
 			// Check each frame
 			JSONObject frame;
-			for (int i = 0; i < frames.length(); i++)
-			{
+			for (int i = 0; i < frames.length(); i++) {
 				frame = frames.getJSONObject(i);
 				
-				try 
-				{
+				try {
 					if (!checkArray(frame.getJSONArray("body")) || !checkArray(frame.getJSONArray("left_arm")) ||
 							!checkArray(frame.getJSONArray("right_arm")) || !checkArray(frame.getJSONArray("left_leg")) ||
 							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")) || 
@@ -174,22 +149,18 @@ public class AnimFactory0_2 extends AnimFactoryBase
 						return false;
 					}
 					
-				} catch(JSONException e)
-				{
+				} catch(JSONException e) {
 					return false;
 				}
 				
-				try
-				{
+				try {
 					frame.getDouble("rotation");
 				} catch (JSONException e) {
 					return false;
 				}
-				
 			}
 		}
-		else
-		{
+		else {
 			System.out.println("Unsupported version: "+ version);
 			return false;
 		}
@@ -197,8 +168,7 @@ public class AnimFactory0_2 extends AnimFactoryBase
 	}
 	
 	// makes sure array is proper array of 3 integers
-	private static boolean checkArray(JSONArray array)
-	{
+	private static boolean checkArray(JSONArray array) {
 		
 		if (array == null || array.length() != 3)
 		{

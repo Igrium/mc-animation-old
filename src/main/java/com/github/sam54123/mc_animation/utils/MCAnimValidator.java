@@ -7,35 +7,29 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MCAnimValidator 
-{
+public class MCAnimValidator {
 	
-	public static boolean validate(JSONObject jsonObject)
-	{
+	public static boolean validate(JSONObject jsonObject) {
 		
 		// Check for version
 		String version;
-		try
-		{
+		try {
 			version = jsonObject.getString("version");
 		} catch(JSONException e) {
 			return false;
 		}
 		
 		
-		if (new ArrayList<String>(Arrays.asList(ProgramConstants.SUPPORTED_VERSIONS)).contains(version))
-		{
+		if (new ArrayList<String>(Arrays.asList(ProgramConstants.SUPPORTED_VERSIONS)).contains(version)) {
 			// Check for ID
-			try 
-			{
+			try {
 				jsonObject.getInt("id");
 			} catch(JSONException e) {
 				return false;
 			}
 			
 			// Check for looping
-			try 
-			{
+			try {
 				jsonObject.getBoolean("looping");
 			} catch(JSONException e) {
 				return false;
@@ -43,8 +37,7 @@ public class MCAnimValidator
 			
 			// Check frames
 			JSONArray frames;
-			try
-			{
+			try {
 				frames = jsonObject.getJSONArray("frames");
 			} catch(JSONException e) {
 				return false;
@@ -53,12 +46,10 @@ public class MCAnimValidator
 			
 			// Check each frame
 			JSONObject frame;
-			for (int i = 0; i < frames.length(); i++)
-			{
+			for (int i = 0; i < frames.length(); i++) {
 				frame = frames.getJSONObject(i);
 				
-				try 
-				{
+				try {
 					if (!checkArray(frame.getJSONArray("body")) || !checkArray(frame.getJSONArray("left_arm")) ||
 							!checkArray(frame.getJSONArray("right_arm")) || !checkArray(frame.getJSONArray("left_leg")) ||
 							!checkArray(frame.getJSONArray("right_leg")) || !checkArray(frame.getJSONArray("head")) || 
@@ -67,22 +58,18 @@ public class MCAnimValidator
 						return false;
 					}
 					
-				} catch(JSONException e)
-				{
+				} catch(JSONException e) {
 					return false;
 				}
 				
-				try
-				{
+				try {
 					frame.getDouble("rotation");
 				} catch (JSONException e) {
 					return false;
 				}
-				
 			}
 		}
-		else
-		{
+		else{
 			System.out.println("Incorrect version: "+ version +" Expected "+ ProgramConstants.ANIMVERSION);
 			return false;
 		}
@@ -90,8 +77,7 @@ public class MCAnimValidator
 	}
 	
 	// makes sure array is proper array of 3 integers
-	private static boolean checkArray(JSONArray array)
-	{
+	private static boolean checkArray(JSONArray array) {
 		
 		if (array == null || array.length() != 3)
 		{

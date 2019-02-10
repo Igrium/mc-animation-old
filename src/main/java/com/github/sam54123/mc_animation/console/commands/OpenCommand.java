@@ -7,19 +7,16 @@ import com.github.sam54123.mc_animation.system.AnimationFactory;
 
 public class OpenCommand extends CommandBase {
 
-	public OpenCommand()
-	{
+	public OpenCommand() {
 		requiredArgs = 1;
 	}
 	
 	@Override
-	public boolean onRun(Console console, String[] args) 
-	{
+	public boolean onRun(Console console, String[] args) {
 		
 		Animation anim = AnimationFactory.getInstance().loadAnimation(args[0]);
 		
-		if (anim == null)
-		{
+		if (anim == null) {
 			System.out.println("Animation failed to initialize");
 			return false;
 		}
@@ -33,20 +30,17 @@ public class OpenCommand extends CommandBase {
 	}
 
 	@Override
-	public String getUsage() 
-	{
+	public String getUsage() {
 		return "open [file]";
 	}
 
 	@Override
-	public String getName() 
-	{
+	public String getName() {
 		return "open";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Open a .mcanim file";
 	}
 

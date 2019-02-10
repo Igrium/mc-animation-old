@@ -9,32 +9,24 @@ import com.github.sam54123.mc_animation.utils.MCAnimStatics;
 
 public class Export extends CommandBase {
 
-	public Export()
-	{
+	public Export()	{
 		requiredArgs = 0;
 		requiresAnim = true;
 	}
 	
 	@Override
-	public boolean onRun(Console console, String[] args) 
-	{
+	public boolean onRun(Console console, String[] args) {
 		String path;
 		
-		if (args.length < 1)
-		{
+		if (args.length < 1) {
 			path = console.loadedAnim.getFolder();
-		}
-		else
-		{
+		} else {
 			path = MCAnimStatics.formatPath(args[0]);
 		}
 		
-		try 
-		{
+		try {
 			AnimCompiler.compileAnimation(console.loadedAnim, path);
-		}
-		catch(IOException e)
-		{
+		} catch(IOException e) {
 			System.out.println("Compile failed");
 			return false;
 		}
@@ -47,20 +39,17 @@ public class Export extends CommandBase {
 	}
 
 	@Override
-	public String getName() 
-	{
+	public String getName() {
 		return "export";
 	}
 
 	@Override
-	public String getUsage() 
-	{
+	public String getUsage() {
 		return "export <path>";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Exports the loaded animation to a .mcfunction that can be read by Minecraft";
 	}
 

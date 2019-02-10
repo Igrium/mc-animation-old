@@ -7,42 +7,34 @@ import com.github.sam54123.mc_animation.utils.MCAnimStatics;
 
 public class Set extends CommandBase {
  
-	public Set()
-	{
+	public Set() {
 		this.requiredArgs = 2;
 	}
 	
 	@Override
-	public boolean onRun(Console console, String[] args) 
-	{
+	public boolean onRun(Console console, String[] args) {
 		
-		if (console.loadedAnim == null)
-		{
+		if (console.loadedAnim == null) {
 			System.out.println("No animation loaded!");
 			return false;
 		}
 		
-		
-		if(args[0].matches("id"))
-		{
+		if(args[0].matches("id")) {
 			console.loadedAnim.setId(Integer.parseInt(args[1]));
 			System.out.println("Set ID to " + console.loadedAnim.id());
 		}
 		
-		if(args[0].matches("looping"))
-		{
+		if(args[0].matches("looping")) {
 			console.loadedAnim.looping = MCAnimStatics.boolFromString(args[1]);
 			System.out.println("Set looping to " + console.loadedAnim.looping);
 		}
 		
-		else
-		{
+		else {
 			System.out.println("Parameters: id, looping");
 			return false;
 		}
 		
 		console.loadedAnim.isSaved = false;
-		
 		return true;
 	}
 

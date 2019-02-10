@@ -6,8 +6,7 @@ import com.github.sam54123.mc_animation.system.AnimationFactory;
 
 import java.util.Set;
 
-public class AnimVersions extends CommandBase
-{
+public class AnimVersions extends CommandBase {
     @Override
     protected boolean onRun(Console console, String[] args) {
         // Get versions from Animation Factory

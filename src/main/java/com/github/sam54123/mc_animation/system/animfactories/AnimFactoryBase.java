@@ -8,8 +8,7 @@ import java.util.Map;
 /**
  * Base class for anim factories. Each mcanim version will have it's own anim factory.
  */
-public abstract class AnimFactoryBase
-{
+public abstract class AnimFactoryBase {
     /**
      * Load an animation object from an mcanim file. Returns null if file invalid.
      * @param path Path to file to load
@@ -28,36 +27,31 @@ public abstract class AnimFactoryBase
      * @param array json array
      * @return float array
      */
-	protected float[] JSONArrayToFloat(JSONArray array)
-	{
-		float[] outArray = new float[array.length()];
-		
-		for (int i = 0; i < array.length(); i++)
-		{
-			outArray[i] = (float)array.getDouble(i);
-		}
-		
-		
-		return outArray;
+    protected float[] JSONArrayToFloat(JSONArray array) {
+        float[] outArray = new float[array.length()];
+                
+        for (int i = 0; i < array.length(); i++) {
+            outArray[i] = (float)array.getDouble(i);
+        }
+            
+        return outArray;
     }
-    
+        
     /**
      * returns the command from the JSON object, if any
      * @param object JSONObject
      * @return Command
      */
-	protected String getCommand(JSONObject object)
-	{
-		try
-		{
-			return object.getString("command");
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
+    protected String getCommand(JSONObject object) {
+        try {
+            return object.getString("command");
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
     }
-    
+        
     /**
      * Registers this factory onto a factory map
      * @param factoryMap

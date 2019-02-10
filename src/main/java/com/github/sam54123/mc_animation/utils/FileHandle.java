@@ -2,17 +2,12 @@ package com.github.sam54123.mc_animation.utils;
 
 import java.io.InputStream;
 
-public class FileHandle 
-{
-	public static InputStream inputStreamFromFile(String path)
-	{
-		try
-		{
+public class FileHandle {
+	public static InputStream inputStreamFromFile(String path) {
+		try {
 			InputStream inputStream = FileHandle.class.getResourceAsStream(path);;
 			return inputStream;
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		

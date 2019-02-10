@@ -10,25 +10,21 @@ import java.util.ArrayList;
 /**
  * Base class for commands meant to run other commands
  */
-public abstract class SubCommandBase extends CommandBase
-{
-   public SubCommandBase()
-   {
-       // We need at least one arguement, the command
-       this.requiredArgs = 1;
-   } 
+public abstract class SubCommandBase extends CommandBase {
+    public SubCommandBase() {
+        // We need at least one arguement, the command
+        this.requiredArgs = 1;
+    } 
 
-   Map<String, CommandBase> commands;
+    Map<String, CommandBase> commands;
 
     // Register all sub-commands
 	@Override
-	public void register(Map<String, CommandBase> consoleCommands)
-	{
+	public void register(Map<String, CommandBase> consoleCommands) {
         super.register(consoleCommands);
         
         // Only register commands if they're not already registered
-        if(commands == null)
-        {
+        if(commands == null) {
             commands = new HashMap<String, CommandBase>();
 
             registerCommands(commands);
@@ -39,8 +35,7 @@ public abstract class SubCommandBase extends CommandBase
     }
 
     @Override
-    protected boolean onRun(Console console, String[] args)
-    {
+    protected boolean onRun(Console console, String[] args) {
         // Obtain and remove the first arguement (the command)
 		ArrayList<String> argsList = new ArrayList<String>();
 		for (String s : args)
@@ -51,12 +46,9 @@ public abstract class SubCommandBase extends CommandBase
         argsList.subList(1, argsList.size()).toArray(commandArgs);
 
         // Actually run the command 
-        if (commands.containsKey(args[0]))
-		{
+        if (commands.containsKey(args[0])) {
 			return commands.get(args[0]).run(console, commandArgs);
-		}
-		else
-		{
+		} else {
             console.out.println("Unknown command '" + getPath() + " " + args[0] + "'. Type '"+getPath()+" help' for a list of comands.");
             return false;
 		}

@@ -2,35 +2,23 @@ package com.github.sam54123.mc_animation.console;
 
 import java.util.Map;
 
-public abstract class CommandBase 
-{
+public abstract class CommandBase {
 	protected abstract boolean onRun(Console console, String[] args);
 	
-	public boolean run(Console console, String[] args)
-	{
-		if (args.length >= requiredArgs)
-		{
-			if (this.requiresAnim)
-			{
-				if (console.loadedAnim == null)
-				{
+	public boolean run(Console console, String[] args) {
+		if (args.length >= requiredArgs) {
+			if (this.requiresAnim) {
+				if (console.loadedAnim == null) {
 					System.out.println("No animation loaded!");
 					return false;
-				}
-				else
-				{
+				} else {
 					return this.onRun(console, args);
 				}
-				
-			}
-			else
-			{
+			} else {
 				return this.onRun(console, args);
 			}
 			
-		}
-		else
-		{
+		} else {
 			System.out.println("Usage: " + this.getUsage());
 			return false;
 		}
@@ -46,8 +34,7 @@ public abstract class CommandBase
 	
 	public abstract String getDescription();
 	
-	public void register(Map<String, CommandBase> commands)
-	{
+	public void register(Map<String, CommandBase> commands) {
 		commands.put(this.getName(), this);
 	}
 }

@@ -11,28 +11,23 @@ import com.github.sam54123.mc_animation.system.AnimCommand;
 import com.github.sam54123.mc_animation.system.AnimFrame;
 import com.github.sam54123.mc_animation.system.Animation;
 
-public class AnimCompiler 
-{
+public class AnimCompiler {
 	// Formats a single frame of an animation
-	public static String formatFrame(AnimFrame frame, String selector)
-	{
+	public static String formatFrame(AnimFrame frame, String selector) {
 		return "data merge entity " + selector + " {" + formatPose(frame) + "}";
 	}
 	
-	public static String formatAnimCall(Animation anim)
-	{
+	public static String formatAnimCall(Animation anim) {
 		return "execute as @e[scores={"+MCCommandConstants.ANIMATION+"="+anim.id()+"}] unless score @s "+MCCommandConstants.PAUSED+" matches 1.. run function "+MCCommandConstants.NAMESPACE+":animations/"+anim.getCompiledAnimName();
 	}
 	
 	// Compiles the animation into a .mcfunction file
-	public static void compileAnimation(Animation animation, String outputPath) throws IOException
-	{
+	public static void compileAnimation(Animation animation, String outputPath) throws IOException {
 		// Make sure path is formatted properly
 		
 		outputPath = outputPath.replace("\\", "/");
 			
-		if (!outputPath.substring(outputPath.length() - 1).matches("/")) 
-		{
+		if (!outputPath.substring(outputPath.length() - 1).matches("/")) {
 			outputPath = outputPath+"/";
 		}
 		
@@ -54,15 +49,13 @@ public class AnimCompiler
 		writer.newLine();
 		
 		// Close animation if not looping
-		if (!animation.looping)
-		{
+		if (!animation.looping) {
 			writer.write("execute if score @s "+ MCCommandConstants.FRAME +" matches "+ (frames.length) +".. run scoreboard players set @s "+ MCCommandConstants.ANIMATION +" 0");
 			writer.newLine();
 		}
 		
 		// Calculate first 0,0,0 relative to last frame and add to function
-		if (animation.resetPos)
-		{
+		if (animation.resetPos) {
 			AnimFrame lastFrame = animation.getFrame(animation.length()-1);
 			
 			float resetX = lastFrame.location[0]*-1;
@@ -82,19 +75,15 @@ public class AnimCompiler
 		
 		float[] relativePos;
 		float relativeRot;
-		for (int i = 0; i < frames.length; i++)
-		{
+		for (int i = 0; i < frames.length; i++) {
 			
 			writer.write(formatFrame(frames[i], "@s[scores={"+ MCCommandConstants.FRAME + "="+i+"}]"));
 			writer.newLine();
 			
 			// figure out position relative to last frame.
-			if (i == 0)
-			{
+			if (i == 0) {
 				relativePos = frames[i].location;
-			}
-			else
-			{
+			} else {
 				relativePos = new float[3];
 				relativePos[0] = frames[i].location[0] - frames[i-1].location[0];
 				relativePos[1] = frames[i].location[1] - frames[i-1].location[1];
@@ -108,26 +97,21 @@ public class AnimCompiler
 			relativePos[2] = relativePos2D[1];
 			
 			// find rotation relative to last frame
-			if (i==0)
-			{
+			if (i==0) {
 				relativeRot = frames[i].rotation;
-			}
-			else
-			{
+			} else {
 				relativeRot = frames[i].rotation - frames[i-1].rotation;
 			}
 						
 			// Only write rotation command if there's rotation
-			if(relativeRot != 0.0f) 
-			{
+			if(relativeRot != 0.0f) {
 				writer.write("execute at @s run tp @s[scores={"+ MCCommandConstants.FRAME + "="+i+"}] ~ ~ ~ ~"+ relativeRot +" ~");
 				writer.newLine();
 			}
 			
 			
 			// Only write teleport command if there's movement
-			if (!(relativePos[0] == 0.0f && relativePos[1] == 0.0f && relativePos[2] == 0.0f))
-			{
+			if (!(relativePos[0] == 0.0f && relativePos[1] == 0.0f && relativePos[2] == 0.0f)) {
 				// Round so Minecraft doesn't throw a fit
 				writer.write("execute at @s run tp @s[scores={"+ MCCommandConstants.FRAME + "="+i+"}] ^"+Math.round(relativePos[0]*1000d)/1000d+" ^"+Math.round(relativePos[1]*1000d)/1000d+" ^"+Math.round(relativePos[2]*1000d)/1000d);
 				writer.newLine();
@@ -140,8 +124,7 @@ public class AnimCompiler
 		writer.write("# commands:");
 		writer.newLine();
 			
-		for (int i = 0; i < commands.length; i++)
-		{
+		for (int i = 0; i < commands.length; i++) {
 			writer.write(formatCommand(commands[i], commands[i].getFrame()));
 			writer.newLine();
 		}
@@ -157,8 +140,7 @@ public class AnimCompiler
 	
 	}
 		
-	private static String formatPose(AnimFrame frame)
-	{
+	private static String formatPose(AnimFrame frame) {
 		//Format the indivdual parts
 		String body = "Body:[" + formatFloat(frame.body[0]) + "," + formatFloat(frame.body[1]) + "," + formatFloat(frame.body[2]) + "]";
 		String leftArm = "LeftArm:[" + formatFloat(frame.leftArm[0]) + "," + formatFloat(frame.leftArm[1]) + "," + formatFloat(frame.leftArm[2]) + "]";
@@ -174,15 +156,13 @@ public class AnimCompiler
 	
 	
 	
-	private static String formatCommand(AnimCommand command, int frame)
-	{
+	private static String formatCommand(AnimCommand command, int frame) {
 		String output = "execute at @s if score @s " + MCCommandConstants.FRAME + " matches " + frame + " run " + command;
 		return output;
 	}
 	
 	// formats a float into the 3.0f format
-	private static String formatFloat(float num)
-	{
+	private static String formatFloat(float num) {
 		String string = Float.toString(num);
 		return string+"f";
 	}

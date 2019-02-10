@@ -13,24 +13,20 @@ import com.github.sam54123.mc_animation.system.animfactories.*;
 /**
  * Master animation factory class that runs the appropriate animation factory
  */
-public class AnimationFactory extends AnimFactoryBase
-{
+public class AnimationFactory extends AnimFactoryBase {
     public Map<String, AnimFactoryBase> animFactories;
 
     // Optional singleton for easy method calling
     private static AnimationFactory instance;
-    public static AnimationFactory getInstance()
-    {
-        if (instance == null)
-        {
+    public static AnimationFactory getInstance() {
+        if (instance == null) {
             instance = new AnimationFactory();
         }
         return instance;
     }
 
     // Register animation factories
-    public AnimationFactory()
-    {
+    public AnimationFactory() {
         animFactories = new HashMap<String, AnimFactoryBase>();
 
         new AnimFactory0_1().register(animFactories);
@@ -38,22 +34,19 @@ public class AnimationFactory extends AnimFactoryBase
     }
     
     @Override
-    public Animation loadAnimation(String path) 
-    {
+    public Animation loadAnimation(String path) {
         System.out.println("Opening "+path);
 		
 		// Validate path and load json object to get version
 		
 		File file = new File(path);
 		
-		if (!file.exists())
-		{
+		if (!file.exists()) {
 			System.out.println("Unknown File");
 			return null;
 		}
 		
-		try
-		{
+		try {
 			String extention = path.substring(path.lastIndexOf("."));
 			if (!extention.matches(".mcanim"))
 			{
@@ -61,31 +54,26 @@ public class AnimationFactory extends AnimFactoryBase
 				return null;
 			}
 		}
-		catch(IndexOutOfBoundsException e)
-		{
+		catch(IndexOutOfBoundsException e) {
 			System.out.println("Unknown filetype");
 			return null;
         }
 
         String version;
-        try
-		{
+        try {
             JSONObject jsonObject = JSONUtils.getJSONObjectFromFile(path);
             version = jsonObject.getString("version");
 		}
-		catch(JSONException e)
-		{
+		catch(JSONException e) {
 			System.out.println("Incorrectly Formatted .mcanim");
 			return null;
 		}
         
         // Make sure version is a supported version and create the animation
-        if (animFactories.containsKey(version))
-        {
+        if (animFactories.containsKey(version)) {
             return animFactories.get(version).loadAnimation(path);
         }
-        else
-        {
+        else {
             System.out.println("Unsupported version: "+version);
             return null;
         }

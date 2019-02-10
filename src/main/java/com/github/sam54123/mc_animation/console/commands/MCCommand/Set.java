@@ -5,25 +5,20 @@ import java.util.ArrayList;
 import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
 
-public class Set extends CommandBase
-{
-    public Set()
-    {
+public class Set extends CommandBase {
+    public Set() {
         this.requiredArgs = 2;
         this.requiresAnim = true;
     }
 
     @Override 
-    protected boolean onRun(Console console, String[] args) 
-    {
-        try
-        {
+    protected boolean onRun(Console console, String[] args) {
+        try {
             int frame = Integer.parseInt(args[0]);
 
             // turn args into arraylist for sublisting
 			ArrayList<String> argsList = new ArrayList<String>();
-			for (String s : args)
-			{
+			for (String s : args) {
 				argsList.add(s);
 			}
 			
@@ -44,20 +39,17 @@ public class Set extends CommandBase
     }
 
     @Override
-	public String getName() 
-	{
+	public String getName() {
 		return "set";
 	}
 
 	@Override
-	public String getUsage()
-	{
+	public String getUsage() {
 		return "command set [frame] [command]";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Sets the command to run at a given frame. Will override existing commands, use functions to run multiple.";
 	}
 }

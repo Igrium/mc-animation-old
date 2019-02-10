@@ -13,45 +13,34 @@ public class Help extends CommandBase {
 	// A string of text to put at the beginning of help command usage. Useful for subcommands
 	private String prefix;
 
-	public Help(Map<String, CommandBase> commands, String prefix)
-	{
+	public Help(Map<String, CommandBase> commands, String prefix) {
 		this.commands = commands;
 		this.prefix = prefix;
 	}
 
-	public Help(Map<String, CommandBase> commands)
-	{
+	public Help(Map<String, CommandBase> commands) {
 		this.commands = commands;
 	}
 
 	@Override
-	public boolean onRun(Console console, String[] args) 
-	{
+	public boolean onRun(Console console, String[] args)  {
 		Set<String> keys = commands.keySet();
 		
 		CommandBase command;
-		if (args.length < 1)
-		{
+		if (args.length < 1) {
 			
-			for (String k : keys)
-			{
+			for (String k : keys) {
 				command = commands.get(k);
 				System.out.println(command.getUsage()+": "+command.getDescription());
 			}
-			
 			return true;
-		}
-		else
-		{
-			if (keys.contains(args[0]))
-			{
+		} else {
+			if (keys.contains(args[0])) {
 				command = commands.get(args[0]);
 				System.out.println(command.getUsage()+": "+command.getDescription());
 				
 				return true;
-			}
-			else
-			{
+			} else {
 				System.out.println("Unknown command");
 				return false;
 			}
@@ -62,20 +51,17 @@ public class Help extends CommandBase {
 	}
 
 	@Override
-	public String getName() 
-	{
+	public String getName() {
 		return "help";
 	}
 
 	@Override
-	public String getUsage() 
-	{
+	public String getUsage() {
 		return prefix + "help <command>";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Show help menu";
 	}
 

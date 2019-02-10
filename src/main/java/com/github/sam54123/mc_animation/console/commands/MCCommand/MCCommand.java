@@ -14,34 +14,29 @@ public class MCCommand extends SubCommandBase {
 	public static Map<String, CommandBase> commands;
 
 	@Override
-	protected void registerCommands(Map<String, CommandBase> commands) 
-	{
+	protected void registerCommands(Map<String, CommandBase> commands) {
 		new Get().register(commands);
 		new Set().register(commands);
 		new List().register(commands);
 	}
 
 	@Override
-	public String getName() 
-	{
+	public String getName() {
 		return "command";
 	}
 
 	@Override
-	public String getUsage()
-	{
+	public String getUsage() {
 		return "command [operation]";
 	}
 
 	@Override
-	public String getPath()
-	{
+	public String getPath() {
 		return "command";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Manipulates minecraft console commands to be run during the animation";
 	}
 	

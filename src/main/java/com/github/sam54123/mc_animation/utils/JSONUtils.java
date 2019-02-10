@@ -5,14 +5,11 @@ import java.util.Scanner;
 
 import org.json.JSONObject;
 
-public class JSONUtils 
-{
-	public static String getJSONStringFromFile(String path)
-	{
+public class JSONUtils {
+	public static String getJSONStringFromFile(String path) {
 		// Open file
 		Scanner scanner;
-		try 
-		{
+		try {
 			
 			File file = new File(path);
 			scanner = new Scanner(file);
@@ -24,31 +21,22 @@ public class JSONUtils
 			
 			return json;
 			
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			System.out.println(e.getStackTrace());
 			return null;
 		}
 		
-		
 	}
 	
-	public static JSONObject getJSONObjectFromFile(String path)
-	{
+	public static JSONObject getJSONObjectFromFile(String path) {
 		File file = new File(path);
-		if (!file.exists())
-		{
+		if (!file.exists()) {
 			System.out.println("Invalid Path");
 			return null;
 		}
 		
-		
 		String string = getJSONStringFromFile(path);
 		return new JSONObject(string);
-		
 	}
-	
-	
 	
 }

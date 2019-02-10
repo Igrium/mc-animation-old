@@ -4,29 +4,22 @@ import com.github.sam54123.mc_animation.console.CommandBase;
 import com.github.sam54123.mc_animation.console.Console;
 import com.github.sam54123.mc_animation.system.AnimCommand;
 
-public class Get extends CommandBase
-{
-    public Get()
-    {
+public class Get extends CommandBase {
+    public Get() {
         this.requiresAnim = true;
         this.requiredArgs = 1;
     }
 
     @Override 
-    protected boolean onRun(Console console, String[] args) 
-    {
-        try
-        {
+    protected boolean onRun(Console console, String[] args) {
+        try {
             int frame = Integer.parseInt(args[0]);
             AnimCommand command = console.loadedAnim.getCommandByFrame(frame);
 
-			if (command == null)
-			{
+			if (command == null) {
 				console.out.println("No command exists at frame "+args[0]);
 				return false;
-			}
-			else
-			{
+			} else {
                 console.out.println(command.getCommand());
                 return true;
             }
@@ -39,20 +32,17 @@ public class Get extends CommandBase
     }
 
     @Override
-	public String getName() 
-	{
+	public String getName() {
 		return "get";
 	}
 
 	@Override
-	public String getUsage()
-	{
+	public String getUsage() {
 		return "command get [frame]";
 	}
 
 	@Override
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return "Returns the console command(s) at a given frame";
 	}
 }

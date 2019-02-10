@@ -4,8 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 // Passive object that represents the pose of one frame of animation 
-public class AnimFrame 
-{
+public class AnimFrame  {
 	
 	public float[] body;
 	public float[] leftArm;
@@ -16,8 +15,7 @@ public class AnimFrame
 	public float[] location;
 	public float rotation;
 	
-	public AnimFrame(float[] body, float[] leftArm, float[] rightArm, float[] leftLeg, float[] rightLeg, float[] head, float[] location, float rotation)
-	{
+	public AnimFrame(float[] body, float[] leftArm, float[] rightArm, float[] leftLeg, float[] rightLeg, float[] head, float[] location, float rotation) {
 		this.body = body;
 		this.leftArm = leftArm;
 		this.rightArm = rightArm;
@@ -28,8 +26,7 @@ public class AnimFrame
 		this.rotation = rotation;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		String body ="body: " + this.body[0] + ", "  + this.body[1] + ", "  + this.body[2];
 		String leftArm ="left arm: " + this.leftArm[0] + ", "  + this.leftArm[1] + ", "  + this.leftArm[2];
 		String rightArm ="right arm:" + this.rightArm[0] + ", "  + this.rightArm[1] + ", "  + this.rightArm[2];
@@ -40,8 +37,7 @@ public class AnimFrame
 		return("[" + body + ", " + leftArm + ", " + rightArm + ", " + leftLeg + ", " + rightLeg + ", " + head + "]");
 	}
 	
-	public JSONObject toJSONObject(AnimCommand command)
-	{
+	public JSONObject toJSONObject(AnimCommand command) {
 		JSONObject jsonFrame = new JSONObject();
 		
 		// Make JSONArrays of all the the body parts
@@ -64,8 +60,7 @@ public class AnimFrame
 		jsonFrame.put("rotation", rotation);
 		
 		
-		if (command != null)
-		{
+		if (command != null) {
 			jsonFrame.put("command", command.getCommand());
 		}
 		
