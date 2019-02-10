@@ -11,7 +11,7 @@ public class Save extends CommandBase {
 	@Override
 	protected boolean onRun(Console console, String[] args) {
 		if (console.loadedAnim == null) {
-			System.out.println("No animation loaded!");
+			console.out.println("No animation loaded!");
 			return false;
 		}
 		
@@ -46,7 +46,7 @@ public class Save extends CommandBase {
 			console.loadedAnim.save(path);
 			return true;
 		} catch(IOException e) {
-			System.out.println("File failed to save...");
+			console.out.println("File failed to save...");
 			return false;
 		}
 	}

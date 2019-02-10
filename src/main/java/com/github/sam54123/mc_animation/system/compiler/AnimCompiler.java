@@ -140,7 +140,7 @@ public class AnimCompiler {
 	
 	}
 		
-	private static String formatPose(AnimFrame frame) {
+	public static String formatPose(AnimFrame frame) {
 		//Format the indivdual parts
 		String body = "Body:[" + formatFloat(frame.body[0]) + "," + formatFloat(frame.body[1]) + "," + formatFloat(frame.body[2]) + "]";
 		String leftArm = "LeftArm:[" + formatFloat(frame.leftArm[0]) + "," + formatFloat(frame.leftArm[1]) + "," + formatFloat(frame.leftArm[2]) + "]";
@@ -155,8 +155,7 @@ public class AnimCompiler {
 	}
 	
 	
-	
-	private static String formatCommand(AnimCommand command, int frame) {
+	public static String formatCommand(AnimCommand command, int frame) {
 		String output = "execute at @s if score @s " + MCCommandConstants.FRAME + " matches " + frame + " run " + command;
 		return output;
 	}

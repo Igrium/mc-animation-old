@@ -27,12 +27,12 @@ public class Export extends CommandBase {
 		try {
 			AnimCompiler.compileAnimation(console.loadedAnim, path);
 		} catch(IOException e) {
-			System.out.println("Compile failed");
+			console.out.println("Compile failed");
 			return false;
 		}
 		
-		System.out.println("Compile Successful!");
-		System.out.println("Insert file into the functions/animations folder of your datapack and add '"
+		console.out.println("Compile Successful!");
+		console.out.println("Insert file into the functions/animations folder of your datapack and add '"
 				+AnimCompiler.formatAnimCall(console.loadedAnim)+"' to any tick function to activate.");
 		
 		return true;

@@ -17,12 +17,12 @@ public class OpenCommand extends CommandBase {
 		Animation anim = AnimationFactory.getInstance().loadAnimation(args[0]);
 		
 		if (anim == null) {
-			System.out.println("Animation failed to initialize");
+			console.out.println("Animation failed to initialize");
 			return false;
 		}
 		
-		System.out.println("Loaded animation: " + anim.name);
-		System.out.println("Animation ID: " + anim.id());
+		console.out.println("Loaded animation: " + anim.name);
+		console.out.println("Animation ID: " + anim.id());
 		
 		console.loadedAnim = anim;
 		

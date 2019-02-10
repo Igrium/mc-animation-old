@@ -9,7 +9,7 @@ public abstract class CommandBase {
 		if (args.length >= requiredArgs) {
 			if (this.requiresAnim) {
 				if (console.loadedAnim == null) {
-					System.out.println("No animation loaded!");
+					console.out.println("No animation loaded!");
 					return false;
 				} else {
 					return this.onRun(console, args);
@@ -19,7 +19,7 @@ public abstract class CommandBase {
 			}
 			
 		} else {
-			System.out.println("Usage: " + this.getUsage());
+			console.out.println("Usage: " + this.getUsage());
 			return false;
 		}
 	}

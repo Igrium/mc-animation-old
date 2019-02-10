@@ -11,7 +11,7 @@ public class Quit extends CommandBase {
 	protected boolean onRun(Console console, String[] args) {
 		// Save animation before close
 		if((console.loadedAnim != null) && !console.loadedAnim.isSaved) {
-			System.out.println("You have unsaved changes. Would you like to save your animation first? (y/n)");
+			console.out.println("You have unsaved changes. Would you like to save your animation first? (y/n)");
 			
 			String input = console.reader().nextLine();
 			
@@ -20,7 +20,7 @@ public class Quit extends CommandBase {
 				try {
 					console.loadedAnim.save();
 				} catch (IOException e) {
-					System.out.println("Unable to save. Canceling exit.");
+					console.out.println("Unable to save. Canceling exit.");
 					return false;
 				}
 			}

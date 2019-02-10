@@ -31,17 +31,17 @@ public class Help extends CommandBase {
 			
 			for (String k : keys) {
 				command = commands.get(k);
-				System.out.println(command.getUsage()+": "+command.getDescription());
+				console.out.println(command.getUsage()+": "+command.getDescription());
 			}
 			return true;
 		} else {
 			if (keys.contains(args[0])) {
 				command = commands.get(args[0]);
-				System.out.println(command.getUsage()+": "+command.getDescription());
+				console.out.println(command.getUsage()+": "+command.getDescription());
 				
 				return true;
 			} else {
-				System.out.println("Unknown command");
+				console.out.println("Unknown command");
 				return false;
 			}
 		}

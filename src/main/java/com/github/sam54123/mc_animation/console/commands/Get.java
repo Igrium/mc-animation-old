@@ -16,29 +16,29 @@ public class Get extends CommandBase {
 	public boolean onRun(Console console, String[] args) {
 		
 		if (console.loadedAnim == null) {
-			System.out.println("No animation loaded!");
+			console.out.println("No animation loaded!");
 			return false;
 		}
 		
 		if(args[0].matches("name")) {
-			System.out.println(console.loadedAnim.name);
+			console.out.println(console.loadedAnim.name);
 		}
 		
 		
 		if(args[0].matches("id")) {
-			System.out.println(console.loadedAnim.id());
+			console.out.println(console.loadedAnim.id());
 		}
 		
 		if(args[0].matches("looping")) {
-			System.out.println(console.loadedAnim.looping);
+			console.out.println(console.loadedAnim.looping);
 		}
 		
 		if(args[0].matches("path")) {
-			System.out.println(console.loadedAnim.path);
+			console.out.println(console.loadedAnim.path);
 		}
 		
 		if(args[0].matches("length")) {
-			System.out.println(console.loadedAnim.getFramesAsArray().length);
+			console.out.println(console.loadedAnim.getFramesAsArray().length);
 		}
 		
 		if(args[0].matches("commands")) {
@@ -46,7 +46,7 @@ public class Get extends CommandBase {
 			
 			for (AnimCommand command : commands) 
 			{
-				System.out.println("Frame: " + command.getFrame() + ", Command: \"" + command.getCommand() + "\"");
+				console.out.println("Frame: " + command.getFrame() + ", Command: \"" + command.getCommand() + "\"");
 			}
 		}
 		
@@ -55,10 +55,10 @@ public class Get extends CommandBase {
 			AnimFrame f;
 			for (int i = 0; i < frames.length; i++) {
 				f = frames[i];
-				System.out.println(String.valueOf(i) + ": " + f.toString());
+				console.out.println(String.valueOf(i) + ": " + f.toString());
 			}
 		} else {
-			System.out.println("Parameters: name, id, looping, path, length, commands");
+			console.out.println("Parameters: name, id, looping, path, length, commands");
 		}
 		
 		return true;
