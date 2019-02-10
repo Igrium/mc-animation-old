@@ -3,7 +3,7 @@ package com.github.sam54123.mc_animation.console;
 import java.util.ArrayList;
 
 /**
- * class that handles the seperation of arguements of a console command
+ * Class that handles the seperation of arguements of a console command
  */
 public class TypedCommand {
 	private String name;

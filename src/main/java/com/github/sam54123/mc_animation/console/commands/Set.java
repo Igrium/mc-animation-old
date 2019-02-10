@@ -15,22 +15,22 @@ public class Set extends CommandBase {
 	public boolean onRun(Console console, String[] args) {
 		
 		if (console.loadedAnim == null) {
-			System.out.println("No animation loaded!");
+			console.out.println("No animation loaded!");
 			return false;
 		}
 		
 		if(args[0].matches("id")) {
 			console.loadedAnim.setId(Integer.parseInt(args[1]));
-			System.out.println("Set ID to " + console.loadedAnim.id());
+			console.out.println("Set ID to " + console.loadedAnim.id());
 		}
 		
 		if(args[0].matches("looping")) {
 			console.loadedAnim.looping = MCAnimStatics.boolFromString(args[1]);
-			System.out.println("Set looping to " + console.loadedAnim.looping);
+			console.out.println("Set looping to " + console.loadedAnim.looping);
 		}
 		
 		else {
-			System.out.println("Parameters: id, looping");
+			console.out.println("Parameters: id, looping");
 			return false;
 		}
 		
