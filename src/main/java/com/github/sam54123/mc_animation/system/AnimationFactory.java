@@ -8,6 +8,8 @@ import org.json.*;
 
 import com.github.sam54123.mc_animation.utils.JSONUtils;
 
+import com.github.sam54123.mc_animation.system.animfactories.*;
+
 /**
  * Master animation factory class that runs the appropriate animation factory
  */

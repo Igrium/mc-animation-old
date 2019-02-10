@@ -1,4 +1,4 @@
-package com.github.sam54123.mc_animation.system;
+package com.github.sam54123.mc_animation.system.animfactories;
 
 import com.github.sam54123.mc_animation.system.Animation;
 import org.json.*;

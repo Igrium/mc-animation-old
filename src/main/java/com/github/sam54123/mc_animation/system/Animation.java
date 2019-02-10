@@ -31,6 +31,10 @@ public class Animation
 	public boolean isSaved = true;
 	
 	private boolean isInitialized = false;
+
+	public Animation() {
+		commands = new ArrayList<AnimCommand>();
+	}
 	
 	/**
 	 * Saves the animation as a .mcanim file and updates path accordingly
@@ -75,13 +79,22 @@ public class Animation
 		return path.substring(0, index);
 	}
 	
+	
 	/**
 	 * Returns an array of all this animation's frames
-	 * @return Frames
+	 * @return Frames frame array
 	 */
 	public AnimFrame[] getFramesAsArray() 
 	{
 		return frames;
+	}
+
+	/**
+	 * Sets the frame array of the animation. For use in factories only.
+	 * @param frames frame array
+	 */
+	public void setFrameArray(AnimFrame[] frames){
+		this.frames = frames;
 	}
 	
 	/**

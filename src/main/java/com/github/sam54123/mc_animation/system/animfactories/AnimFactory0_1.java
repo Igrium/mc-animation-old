@@ -1,13 +1,14 @@
-package com.github.sam54123.mc_animation.system;
+package com.github.sam54123.mc_animation.system.animfactories;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import org.json.*;
 
 import com.github.sam54123.mc_animation.system.Animation;
 import com.github.sam54123.mc_animation.utils.JSONUtils;
-class AnimFactory0_1 extends AnimFactoryBase
+import com.github.sam54123.mc_animation.system.AnimFrame;
+
+public class AnimFactory0_1 extends AnimFactoryBase
 {
     @Override
 	public Animation loadAnimation(String path) 
@@ -39,7 +40,6 @@ class AnimFactory0_1 extends AnimFactoryBase
 			return null;
 		}
 		
-		animation.commands = new ArrayList<AnimCommand>();
 		
 		interpritJSON(animation, animation.jsonObject); 
 		
@@ -63,7 +63,7 @@ class AnimFactory0_1 extends AnimFactoryBase
 			String command;
 			
 			// get ID
-			animation.id = jsonObject.getInt("id");
+			animation.setId(jsonObject.getInt("id"));
 			
 			// get is Looping
 			animation.looping = jsonObject.getBoolean("looping");
@@ -79,7 +79,7 @@ class AnimFactory0_1 extends AnimFactoryBase
 			}
 			
 			// create new AnimFrame array of the right length
-			animation.frames = new AnimFrame[jsonArray.length()];
+			AnimFrame[] frames = new AnimFrame[jsonArray.length()];
 			
 			// Iterate over entire JSON array
 			for(int i = 0; i < jsonArray.length(); i++)
@@ -89,7 +89,7 @@ class AnimFactory0_1 extends AnimFactoryBase
 				// Make a new AnimFrame with the right values
 				
 				// version 0.1 does not have a position value, enter 0.0f for it.
-				animation.frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
+				frames[i] = new AnimFrame(JSONArrayToFloat(object.getJSONArray("body")),
 					JSONArrayToFloat(object.getJSONArray("left_arm")),
 					JSONArrayToFloat(object.getJSONArray("right_arm")),
 					JSONArrayToFloat(object.getJSONArray("left_leg")),
@@ -98,17 +98,19 @@ class AnimFactory0_1 extends AnimFactoryBase
 					new float[]{0.0f, 0.0f, 0.0f},
 					(float)object.getDouble("rotation"));
 				
-				
+
 				// Output command (if exists) to commands arraylist
 				
 				command = getCommand(object);
 				
 				if (command != null && !command.matches(""))
 				{
-					animation.commands.add(new AnimCommand(command, i));
+					animation.setCommand(i, command);
 				}
 				
 			}
+
+			animation.setFrameArray(frames);
 			
 		}
 		else
